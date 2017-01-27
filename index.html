@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Jungle Speed Game</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- My CSS    -->
+    <link rel="stylesheet" href="css/main.css">
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Jungle Speed</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Play the game <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Cards</a></li>
+            <li><a href="#">Rules</a></li>
+            <li><a href="#">Buy the game</a></li>
+            <li><a href="#">Wathever</a></li>
+          </ul>
+
+        </div>
+      </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row">
+      <h1>JUNGLE SPEED</h1>
+      <div class="col-md-6">
+        <h2>Set the game</h2>
+        <h3>Number of players</h3>
+        <select id="number-of-players" class="form-control">
+          <option></option>
+          <option value="4">4 players</option>
+          <option value="3">3 players vs 1 cpu</option>
+          <option value="2">2 players vs 2 cpu</option>
+          <option value="1">1 player vs 3 cpu</option>
+        </select>
+
+        <div id="cpu" class="hide-container">
+          <h3>Level of computer</h3>
+          <select id="lvl-of-cpu" class="form-control">
+            <option></option>
+            <option value="0">Dumb</option>
+            <option value="1">Decent</option>
+            <option value="2">God</option>
+          </select>
+        </div>
+
+        <button id="all-set" class="btn btn-success btn-lg">All SET</button>
+      </div>
+
+      <div id="recap" class="col-md-6">
+
+          <div id="names-to-play">
+            <!-- <div><h5>Name of player 1 will have the "Q" key assigned</h5></div>
+            <div><h5>Name of player 2 will have the "P" key assigned</h5></div>
+            <div><h5>Name of player 3 will have the "Z" key assigned</h5></div>
+            <div><h5>Name of player 4 will have the "M" key assigned</h5></div> -->
+          </div>
+
+          <div id="final-cpu-lvl">
+          <!-- <div><h5>Will be facing X CPU with an X level of intelligence</h5></div> -->
+          </div>
+          <button id="play" class="btn btn-success btn-lg">PLAY</button>
+      </div>
+    </div>
+
+
+  </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  </body>
+
+    <!-- My JS -->
+    <script src="js/main.js"></script>
+</html>
