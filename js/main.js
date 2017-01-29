@@ -99,25 +99,51 @@ var test = $("#number-of-players").val();
 // Get the number of players and ask every human player for his name and assign a key to every human
 
 $( "#all-set" ).on('click', function() {
-    players = $("#number-of-players").val();
 
-    for (var i = 0; i < players; i++) {
-      playerArr.push(prompt("What's the name of Player " + [i+1] + "?"));
-
-      $('#names-to-play').append(
-      '<div><h5>'+ playerArr[i]  + ' will have the "' + playerKey[i] +'" key assigned</h5></div>');
-    }
-
-
+    setAllPlayers();
     // get the lvl of the computer if there is
+    SetCpuLvl();
 
-    var cpuLvl = $("#lvl-of-cpu").val();
+});
 
-    $("#final-cpu-lvl").append('<div><h5>Will be playing with a ' + computerLevel[cpuLvl] + ' CPU</h5><h3>WHO WILL WIN?</h3></div>');
+
+$( "#play" ).on('click', function() {
+
+  $("#first-screen").addClass("hide-container");
+  $("#board-screen").addClass("show-container");
 
 
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+function setAllPlayers(){
+  players = $("#number-of-players").val();
+
+  for (var i = 0; i < players; i++) {
+    playerArr.push(prompt("What's the name of Player " + [i+1] + "?"));
+
+    $('#names-to-play').append(
+    '<div><h5>'+ playerArr[i]  + ' will have the "' + playerKey[i] +'" key assigned</h5></div>');
+  }
+}
+
+function SetCpuLvl(){
+  var cpuLvl = $("#lvl-of-cpu").val();
+
+  $("#final-cpu-lvl").append('<div><h5>Will be playing with a ' + computerLevel[cpuLvl] + ' CPU</h5><h3>WHO WILL WIN?</h3></div>');
+}
 
 
 
