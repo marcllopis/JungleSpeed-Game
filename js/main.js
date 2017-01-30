@@ -183,13 +183,13 @@ function JungleSpeed() {
 //set variables
 var jungleSpeed = new JungleSpeed();
 
-console.log(jungleSpeed.cards);
-jungleSpeed.shuffleCards();
-jungleSpeed.splitArray();
-console.log(jungleSpeed.stackPlayer1);
-console.log(jungleSpeed.stackPlayer2);
-console.log(jungleSpeed.stackPlayer3);
-console.log(jungleSpeed.stackPlayer4);
+// console.log(jungleSpeed.cards);
+// jungleSpeed.shuffleCards();
+// jungleSpeed.splitArray();
+// console.log(jungleSpeed.stackPlayer1);
+// console.log(jungleSpeed.stackPlayer2);
+// console.log(jungleSpeed.stackPlayer3);
+// console.log(jungleSpeed.stackPlayer4);
 
 
 
@@ -201,6 +201,7 @@ var stack1 = [];
 var stack2 = [];
 var stack3 = [];
 var stack4 = [];
+var playersArray = ["Computer 1", "Computer 2", "Computer 3", "Computer 4"];
 
 
 
@@ -244,16 +245,34 @@ $( "#play" ).on('click', function() {
   $("#first-screen").addClass("hide-container");
   $("#board-screen").addClass("show-container");
 
+  jungleSpeed.shuffleCards();
+  jungleSpeed.splitArray();
+
+  console.log(jungleSpeed.stackPlayer1);
+  // add cards to each player
+  $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+  $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+  $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+  $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
 });
 
 // -------------------------------------------------------
 
 
 
+/*
+
+create an event for a space key, this key will trigger the event of showing a new card
+this means:
+
+i have to show a card from the stackplayer. refresh the cards left and discard cards counter.
+at the moment i show this card, i have to remove it from the stack of cards and push it to the discard array
+
+i have to create turns, so player 1 get a card, and when we press space, its player 2 who gets a card, when we get to player 4, next will be player 1
 
 
-
-
+*/
 
 
 
@@ -268,6 +287,10 @@ function setAllPlayers(){
 
     $('#names-to-play').append(
     '<div><h5>'+ playerArr[i]  + ' will have the "' + playerKey[i] +'" key assigned</h5></div>');
+
+    $("#player-"+(i+1)).append(playerArr[i]);
+
+
   }
 }
 
