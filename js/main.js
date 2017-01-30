@@ -38,78 +38,78 @@ function JungleSpeed() {
                 "card2",
                 "card3",
                 "card4",
-                "card5",
-                "card6",
-                "card7",
-                "card8",
-                "card9",
-                "card10",
-                "card11",
-                "card12",
-                "card13",
-                "card14",
-                "card15",
-                "card16",
-                "card17",
-                "card18",
-                "card19",
-                "card20",
-                "card21",
-                "card22",
-                "card23",
-                "card24",
-                "card25",
-                "card26",
-                "card27",
-                "card28",
-                "card29",
-                "card30",
-                "card31",
-                "card32",
-                "card33",
-                "card34",
-                "card35",
-                "card36",
-                "card37",
-                "card38",
-                "card39",
-                "card40",
-                "card41",
-                "card42",
-                "card43",
-                "card44",
-                "card45",
-                "card46",
-                "card47",
-                "card48",
-                "card49",
-                "card50",
-                "card51",
-                "card52",
-                "card53",
-                "card54",
-                "card55",
-                "card56",
-                "card57",
-                "card58",
-                "card59",
-                "card60",
-                "card61",
-                "card62",
-                "card63",
-                "card64",
-                "card65",
-                "card66",
-                "card67",
-                "card68",
-                "card69",
-                "card70",
-                "card71",
-                "card72",
-                "card73",
-                "card74",
-                "card75",
-                "card76",
+                {name:"card5",family:"star1"},
+                {name:"card6",family:"star1"},
+                {name:"card7",family:"star1"},
+                {name:"card8",family:"star1"},
+                {name:"card9",family:"star2"},
+                {name:"card10",family:"star2"},
+                {name:"card11",family:"star2"},
+                {name:"card12",family:"star2"},
+                {name:"card13",family:"squarecircle"},
+                {name:"card14",family:"squarecircle"},
+                {name:"card15",family:"squarecircle"},
+                {name:"card16",family:"squarecircle"},
+                {name:"card17",family:"star3"},
+                {name:"card18",family:"star3"},
+                {name:"card19",family:"star3"},
+                {name:"card20",family:"star3"},
+                {name:"card21",family:"loop1"},
+                {name:"card22",family:"loop1"},
+                {name:"card23",family:"loop1"},
+                {name:"card24",family:"loop1"},
+                {name:"card25",family:"loop2"},
+                {name:"card26",family:"loop2"},
+                {name:"card27",family:"loop2"},
+                {name:"card28",family:"loop2"},
+                {name:"card29",family:"star4"},
+                {name:"card30",family:"star4"},
+                {name:"card31",family:"star4"},
+                {name:"card32",family:"star4"},
+                {name:"card33",family:"hexagonsquare"},
+                {name:"card34",family:"hexagonsquare"},
+                {name:"card35",family:"hexagonsquare"},
+                {name:"card36",family:"hexagonsquare"},
+                {name:"card37",family:"circlecross1"},
+                {name:"card38",family:"circlecross1"},
+                {name:"card39",family:"circlecross1"},
+                {name:"card40",family:"circlecross1"},
+                {name:"card41",family:"loop3"},
+                {name:"card42",family:"loop3"},
+                {name:"card43",family:"loop3"},
+                {name:"card44",family:"loop3"},
+                {name:"card45",family:"circlecross2"},
+                {name:"card46",family:"circlecross2"},
+                {name:"card47",family:"circlecross2"},
+                {name:"card48",family:"circlecross2"},
+                {name:"card49",family:"dots1"},
+                {name:"card50",family:"dots1"},
+                {name:"card51",family:"dots1"},
+                {name:"card52",family:"dots1"},
+                {name:"card53",family:"loop4"},
+                {name:"card54",family:"loop4"},
+                {name:"card55",family:"loop4"},
+                {name:"card56",family:"loop4"},
+                {name:"card57",family:"hexagoncircle"},
+                {name:"card58",family:"hexagoncircle"},
+                {name:"card59",family:"hexagoncircle"},
+                {name:"card60",family:"hexagoncircle"},
+                {name:"card61",family:"circlecross3"},
+                {name:"card62",family:"circlecross3"},
+                {name:"card63",family:"circlecross3"},
+                {name:"card64",family:"circlecross3"},
+                {name:"card65",family:"dots2"},
+                {name:"card66",family:"dots2"},
+                {name:"card67",family:"dots2"},
+                {name:"card68",family:"dots2"},
+                {name:"card69",family:"circlesquare"},
+                {name:"card70",family:"circlesquare"},
+                {name:"card71",family:"circlesquare"},
+                {name:"card72",family:"circlesquare"},
+                {name:"card73",family:"circlecross4"},
+                {name:"card74",family:"circlecross4"},
+                {name:"card75",family:"circlecross4"},
+                {name:"card76",family:"circlecross4"}
               ];
 
   this.stackPlayer1 = [];
@@ -295,7 +295,7 @@ $(document).keypress(function(event){
         jungleSpeed.discardsPlayer1.push(jungleSpeed.stackPlayer1[0]);
         jungleSpeed.stackPlayer1.shift();
 
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer1[0] + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer1[0].name + '.jpg" alt="">');
 
         $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
       }
@@ -309,7 +309,7 @@ $(document).keypress(function(event){
 
         jungleSpeed.discardsPlayer2.push(jungleSpeed.stackPlayer2[0]);
         jungleSpeed.stackPlayer2.shift();
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer2[0] + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer2[0].name + '.jpg" alt="">');
 
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
       }
@@ -324,7 +324,7 @@ $(document).keypress(function(event){
 
         jungleSpeed.discardsPlayer3.push(jungleSpeed.stackPlayer3[0]);
         jungleSpeed.stackPlayer3.shift();
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer3[0] + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer3[0].name + '.jpg" alt="">');
 
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
       }
@@ -340,7 +340,7 @@ $(document).keypress(function(event){
 
         jungleSpeed.discardsPlayer4.push(jungleSpeed.stackPlayer4[0]);
         jungleSpeed.stackPlayer4.shift();
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer4[0] + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer4[0].name + '.jpg" alt="">');
 
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
       }
