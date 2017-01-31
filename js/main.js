@@ -34,10 +34,10 @@ When turns are passung, the stack of players will be decreasing, so:
 function JungleSpeed() {
   //need to add all cards with the img src and maybe something like name/id to compare them later
   this.cards = [
-                "card1",
-                "card2",
-                "card3",
-                "card4",
+                {name:"card2",family:"special"},
+                {name:"card2",family:"special"},
+                {name:"card2",family:"special"},
+                {name:"card2",family:"special"},
                 {name:"card5",family:"star1"},
                 {name:"card6",family:"star1"},
                 {name:"card7",family:"star1"},
@@ -112,11 +112,13 @@ function JungleSpeed() {
                 {name:"card76",family:"circlecross4"}
               ];
 
+//those are the cards that players need to play, when it gets to 0, game ends
   this.stackPlayer1 = [];
   this.stackPlayer2 = [];
   this.stackPlayer3 = [];
   this.stackPlayer4 = [];
 
+//this is the cards every player had play, it's the cards the player will pass to another when losing
   this.discardsPlayer1 = [];
   this.discardsPlayer2 = [];
   this.discardsPlayer3 = [];
@@ -124,7 +126,7 @@ function JungleSpeed() {
 
 
   JungleSpeed.prototype.players = function (player){
-    // Do i need to put something here?
+
   };
 
   JungleSpeed.prototype.shuffleCards = function() {
@@ -167,12 +169,7 @@ function JungleSpeed() {
 
   };
 
-// i have a stack of cards, i want to show one card and at the same time take this card out of this.stackplayer and add it to this.discardsplayer. After that, somehow, i have to refresh the count in the dom
-
   JungleSpeed.prototype.showCard = function(stackplayer) {
-
-
-
 
   };
 
@@ -185,15 +182,6 @@ function JungleSpeed() {
 
 //set variables
 var jungleSpeed = new JungleSpeed();
-
-// console.log(jungleSpeed.cards);
-// jungleSpeed.shuffleCards();
-// jungleSpeed.splitArray();
-// console.log(jungleSpeed.stackPlayer1);
-// console.log(jungleSpeed.stackPlayer2);
-// console.log(jungleSpeed.stackPlayer3);
-// console.log(jungleSpeed.stackPlayer4);
-
 
 
 var players;
@@ -234,7 +222,7 @@ var test = $("#number-of-players").val();
 $( "#all-set" ).on('click', function() {
 
     setAllPlayers();
-    // get the lvl of the computer if there is
+
     SetCpuLvl();
 
 });
@@ -249,6 +237,7 @@ $( "#play" ).on('click', function() {
   $("#first-screen").addClass("hide-container");
   $("#board-screen").addClass("show-container");
 
+  //shuffle and get all stacks for each player
   jungleSpeed.shuffleCards();
   jungleSpeed.splitArray();
 
@@ -267,105 +256,127 @@ $( "#play" ).on('click', function() {
 
 
 
-/*
-
-create an event for a space key, this key will trigger the event of showing a new card
-this means:
-
-i have to show a card from the stackplayer. refresh the cards left and discard cards counter.
-at the moment i show this card, i have to remove it from the stack of cards and push it to the discard array
-
-i have to create turns, so player 1 get a card, and when we press space, its player 2 who gets a card, when we get to player 4, next will be player 1
-
-*/
+// function to check what happen if i press space (change turn) and what happens if i press a key to claim for equal cards
 
 $(document).keypress(function(event){
-  var keyPressed = event.key;
+
+  var keyPressed = event.key; //capture the key
+
   console.log(keyPressed);
-  $("#player-turn").empty();
-  turn ++;
+  $("#player-turn").empty(); // empty all the container
 
-  switch (turn) {
-    case 1:
-      if (keyPressed === " ") {
-        $("#player-turn").append("IT'S " + playerArr[0] + " TURN!");
-        $("#card-player-1").empty();
-        $("#cards-player-1").empty();
+  if (keyPressed === " ") {
+    turn ++;//increase the turn so it changes
 
-        jungleSpeed.discardsPlayer1.push(jungleSpeed.stackPlayer1[0]);
-        jungleSpeed.stackPlayer1.shift();
+    switch (turn) { // switch between every turn
+      case 1:
+          $("#player-turn").append("IT'S " + playerArr[0] + " TURN!");
+          $("#card-player-1").empty();
+          $("#cards-player-1").empty();
 
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer1[0].name + '.jpg" alt="">');
+          jungleSpeed.discardsPlayer1.push(jungleSpeed.stackPlayer1[0]);
+          jungleSpeed.stackPlayer1.shift();
 
-        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-      }
-    break;
+          $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer1[0].name + '.jpg" alt="">');
 
-    case 2:
-      if (keyPressed === " ") {
-        $("#player-turn").append("IT'S " + playerArr[1] + " TURN!");
-        $("#card-player-2").empty();
-        $("#cards-player-2").empty();
+          $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
 
-        jungleSpeed.discardsPlayer2.push(jungleSpeed.stackPlayer2[0]);
-        jungleSpeed.stackPlayer2.shift();
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer2[0].name + '.jpg" alt="">');
+      break;
 
-        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-      }
-    break;
+      case 2:
+          $("#player-turn").append("IT'S " + playerArr[1] + " TURN!");
+          $("#card-player-2").empty();
+          $("#cards-player-2").empty();
 
-    case 3:
-      if (keyPressed === " ") {
-        $("#player-turn").append("IT'S " + playerArr[2] + " TURN!");
-        $("#card-player-3").empty();
-        $("#cards-player-3").empty();
+          jungleSpeed.discardsPlayer2.push(jungleSpeed.stackPlayer2[0]);
+          jungleSpeed.stackPlayer2.shift();
+          $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer2[0].name + '.jpg" alt="">');
 
+          $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
 
-        jungleSpeed.discardsPlayer3.push(jungleSpeed.stackPlayer3[0]);
-        jungleSpeed.stackPlayer3.shift();
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer3[0].name + '.jpg" alt="">');
+      break;
 
-        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-      }
-    break;
-
-    case 4:
-      turn = 0;
-      if (keyPressed === " ") {
-        $("#player-turn").append("IT'S " + playerArr[3] + " TURN!");
-        $("#card-player-4").empty();
-        $("#cards-player-4").empty();
+      case 3:
+          $("#player-turn").append("IT'S " + playerArr[2] + " TURN!");
+          $("#card-player-3").empty();
+          $("#cards-player-3").empty();
 
 
-        jungleSpeed.discardsPlayer4.push(jungleSpeed.stackPlayer4[0]);
-        jungleSpeed.stackPlayer4.shift();
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer4[0].name + '.jpg" alt="">');
+          jungleSpeed.discardsPlayer3.push(jungleSpeed.stackPlayer3[0]);
+          jungleSpeed.stackPlayer3.shift();
+          $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer3[0].name + '.jpg" alt="">');
 
-        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-      }
-    break;
+          $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+
+      break;
+
+      case 4:
+        turn = 0;
+          $("#player-turn").append("IT'S " + playerArr[3] + " TURN!");
+          $("#card-player-4").empty();
+          $("#cards-player-4").empty();
+
+
+          jungleSpeed.discardsPlayer4.push(jungleSpeed.stackPlayer4[0]);
+          jungleSpeed.stackPlayer4.shift();
+          $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer4[0].name + '.jpg" alt="">');
+
+          $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
+      break;
+    }
   }
 
   switch (keyPressed) {
-    case "p":
-      alert("I've pressed P");
+    case "q": //player 1
+
+
+      if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer2[0].family || jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer3[0].family || jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer4[0].family) {
+
+      alert("You rock!");
+      } else {
+      alert("You fucked up");  }
+
+     break;
+
+    case "p": //player 2
+
+      if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer1[0].family || jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer3[0].family || jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer4[0].family) {
+
+        alert("You rock!");
+
+      } else {
+        alert("You fucked it up");
+      }
+
     break;
-    case "q":
-      alert("I've pressed Q");
+    case "z"://player 3
+
+      if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer2[0].family || jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer1[0].family || jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer4[0].family) {
+
+        alert("You rock!");
+
+      } else {
+        alert("You fucked it up");
+      }
+
     break;
-    case "z":
-      alert("I've pressed Z");
-    break;
-    case "m":
-      alert("I've pressed M");
+    case "m": //player 4
+
+      if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family || jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family || jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family) {
+
+        alert("You rock!");
+
+      } else {
+        alert("You fucked it up");
+      }
+
     break;
   }
 
 });
 
-
-
+//function to ask for every player name and attach it to the board
 
 function setAllPlayers(){
   players = $("#number-of-players").val();
@@ -381,6 +392,9 @@ function setAllPlayers(){
 
   }
 }
+
+
+//check for the cpu lvl
 
 function SetCpuLvl(){
   var cpuLvl = $("#lvl-of-cpu").val();
