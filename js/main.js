@@ -112,6 +112,12 @@ function JungleSpeed() {
     {name:"card76",family:"circlecross4"}
   ];
 
+  this.playerArr = [
+                    {name: "", type: ""},
+                    {name: "", type: ""},
+                    {name: "", type: ""},
+                    {name: "", type: ""}
+  ];
 
   //those are the cards that players need to play, when it gets to 0, game ends
   this.stackPlayer1 = [];
@@ -203,6 +209,7 @@ var randomPlayer;
 
 
 
+
 // Check if the user selects 4 real players, if not, it means there will be a computer, so i'll show the computer lvl options
 
 $(document).on('change', "#number-of-players", function(){
@@ -220,6 +227,55 @@ $(document).on('change', "#number-of-players", function(){
 });
 
 // -------------------------------------------------------
+
+
+//function to ask for every player name and attach it to the board
+
+function setAllPlayers(){
+  players = $("#number-of-players").val();
+  console.log(players);
+
+  if (players === "3") {
+    for (var j = 3; j < 4; j++) {
+      jungleSpeed.playerArr[j].name = prompt("Give a name to the computer you will play against!").toUpperCase();
+      jungleSpeed.playerArr[j].type = "cpu";
+    }
+  }
+  if (players === "2") {
+    for (var k = 2; k < 4; k++) {
+      jungleSpeed.playerArr[k].name = prompt("Give a name to the computer you will play against!").toUpperCase();
+      jungleSpeed.playerArr[k].type = "cpu";
+    }
+  }
+  if (players === "1") {
+    for (var y = 1; y < 4; y++) {
+      jungleSpeed.playerArr[y].name = prompt("Give a name to the computer you will play against!").toUpperCase();
+      jungleSpeed.playerArr[y].type = "cpu";
+    }
+  }
+
+  for (var i = 0; i < players; i++) {
+    jungleSpeed.playerArr[i].name = prompt("What's the name of Player " + [i+1] + "?").toUpperCase();
+    jungleSpeed.playerArr[i].type = "human";
+  }
+
+  for (var q = 0; q < 4; q++) {
+    $('#names-to-play').append(
+      '<div><h5>'+ jungleSpeed.playerArr[q].name  + ' will have the "' + playerKey[q] +'" key assigned</h5></div>');
+
+      $("#player-"+(q+1)).append(jungleSpeed.playerArr[q].name);
+  }
+
+}
+
+
+  //check for the cpu lvl
+
+  function SetCpuLvl(){
+    var cpuLvl = $("#lvl-of-cpu").val();
+
+    $("#final-cpu-lvl").append('<div><h5>Will be playing with a ' + computerLevel[cpuLvl] + ' CPU</h5><h3>WHO WILL WIN?</h3></div>');
+  }
 
 
 
@@ -270,6 +326,21 @@ $(document).keypress(function(event){
 
   console.log(keyPressed);
   $("#player-turn").empty(); // empty all the container
+
+//Win condition for each player
+
+  if (jungleSpeed.stackPlayer1.length === 0) {
+    alert("PLAYER 1 WIN!!!");
+  }
+  if (jungleSpeed.stackPlayer2.length === 0) {
+    alert("PLAYER 2 WIN!!!");
+  }
+  if (jungleSpeed.stackPlayer3.length === 0) {
+    alert("PLAYER 3 WIN!!!");
+  }
+  if (jungleSpeed.stackPlayer4.length === 0) {
+    alert("PLAYER 4 WIN!!!");
+  }
 
   if (keyPressed === " ") {
     turn ++;//increase the turn so it changes
@@ -1041,30 +1112,7 @@ $(document).keypress(function(event){
 
 });
 
-//function to ask for every player name and attach it to the board
 
-function setAllPlayers(){
-  players = $("#number-of-players").val();
-
-  for (var i = 0; i < players; i++) {
-    playerArr[i] = prompt("What's the name of Player " + [i+1] + "?").toUpperCase();
-
-    $('#names-to-play').append(
-      '<div><h5>'+ playerArr[i]  + ' will have the "' + playerKey[i] +'" key assigned</h5></div>');
-
-      $("#player-"+(i+1)).append(playerArr[i]);
-
-    }
-  }
-
-
-  //check for the cpu lvl
-
-  function SetCpuLvl(){
-    var cpuLvl = $("#lvl-of-cpu").val();
-
-    $("#final-cpu-lvl").append('<div><h5>Will be playing with a ' + computerLevel[cpuLvl] + ' CPU</h5><h3>WHO WILL WIN?</h3></div>');
-  }
 
 
 
