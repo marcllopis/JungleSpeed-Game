@@ -401,15 +401,31 @@ $(document).keypress(function(event){
       }
       //player1 fails
       else if (jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer4[0].family) {
-        alert("You thought you had a similar card but you didnt!");
+
+        //player 1 will get all discards card from other players and add them to their stack cards
+
+        var newArrPlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4)));
+        var finalArrPlayer1 = newArrPlayer1.concat(jungleSpeed.stackPlayer1);
+        jungleSpeed.stackPlayer1 = finalArrPlayer1;
+        jungleSpeed.discardsPlayer1 = [];
+        jungleSpeed.discardsPlayer2 = [];
+        jungleSpeed.discardsPlayer3 = [];
+        jungleSpeed.discardsPlayer4 = [];
+
+        //empty the container before refreshing it
+        $("#cards-player-1").empty();
+        $("#cards-player-2").empty();
+        $("#cards-player-3").empty();
+        $("#cards-player-4").empty();
+
+        //append the new results of cards-left and discards
+        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
+        alert("Player 1 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer1.length + " cards left to win");
       }
-
-
-      // if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer2[0].family || jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer3[0].family || jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer4[0].family) {
-      //
-      // alert("You rock!");
-      // } else {
-      // alert("You fucked up");  }
 
      break;
 
