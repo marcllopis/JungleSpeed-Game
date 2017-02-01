@@ -358,25 +358,16 @@ function setAllPlayers(){
 
       //Win condition for each player
 
-      // if (jungleSpeed.stackPlayer1.length === 0) {
-      //   alert("PLAYER 1 WIN!!!");
-      // }
-      // if (jungleSpeed.stackPlayer2.length === 0) {
-      //   alert("PLAYER 2 WIN!!!");
-      // }
-      // if (jungleSpeed.stackPlayer3.length === 0) {
-      //   alert("PLAYER 3 WIN!!!");
-      // }
-      // if (jungleSpeed.stackPlayer4.length === 0) {
-      //   alert("PLAYER 4 WIN!!!");
-      // }
-
       if (keyPressed === " ") {
         turn ++;//increase the turn so it changes
 
 
         switch (turn) { // switch between every turn
-          case 1:
+          case 1: //player 1 turn
+          console.log(jungleSpeed.stackPlayer1.length);
+          if (jungleSpeed.stackPlayer1.length === 1) {
+            alert("PLAYER 1 WIN!!!");
+          }
           $("#player-turn").append("IT'S " + jungleSpeed.playerArr[0].name + " TURN!");
           $("#card-player-1").empty();
           $("#cards-player-1").empty();
@@ -395,14 +386,20 @@ function setAllPlayers(){
 
           $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
 
+
+
+
           break;
 
-          case 2:
+          case 2://player 2 turn
 
 
           // if (jungleSpeed.playerArr[1].type === "cpu") {
           //   setTimeout(player2Options, 3000);
           // }
+          if (jungleSpeed.stackPlayer2.length === 1) {
+            alert("PLAYER 2 WIN!!!");
+          }
 
           $("#player-turn").append("IT'S " + jungleSpeed.playerArr[1].name + " TURN!");
           $("#card-player-2").empty();
@@ -420,13 +417,17 @@ function setAllPlayers(){
 
           $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
 
+
           break;
 
-          case 3:
+          case 3://player 3 turn
 
           // if (jungleSpeed.playerArr[2].type === "cpu") {
           //   setTimeout(player3Options, 3000);
           // }
+          if (jungleSpeed.stackPlayer3.length === 1) {
+            alert("PLAYER 3 WIN!!!");
+          }
 
           $("#player-turn").append("IT'S " + jungleSpeed.playerArr[2].name + " TURN!");
           $("#card-player-3").empty();
@@ -445,9 +446,14 @@ function setAllPlayers(){
 
           $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
 
+
+
           break;
 
-          case 4:
+          case 4: //player 4 turn
+          if (jungleSpeed.stackPlayer4.length === 1) {
+            alert("PLAYER 4 WIN!!!");
+          }
           turn = 0;
 
           $("#player-turn").append("IT'S " + jungleSpeed.playerArr[3].name + " TURN!");
@@ -467,10 +473,10 @@ function setAllPlayers(){
 
           $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
 
+
+
           break;
         }
-
-
 
       }
 
@@ -527,105 +533,107 @@ function setAllPlayers(){
 
       // COMPUTER THINGS --------------------------------
 
-      // if (jungleSpeed.playerArr[3].type === "cpu") {
-      //   console.log("COMPUTER TURN");
-      //   console.log(jungleSpeed.keyPressedBeforePlayer1);
-      //   console.log(jungleSpeed.keyPressedBeforePlayer2);
-      //   console.log(jungleSpeed.keyPressedBeforePlayer3);
-      //   console.log(jungleSpeed.keyPressedBeforePlayer4);
-      //   console.log("........................");
-      //
-      //   randomLvl = Math.floor((Math.random() * 10) + 1);
-      //   console.log(randomLvl);
-      //
-      //     //player4 win vs player1
-      //     if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer1[0].visible === true) {
-      //       if (jungleSpeed.keyPressedBeforePlayer1 === false) {
-      //         setTimeout(player4WinPlayer1, 2000);
-      //         return;
-      //       }
-      //     }
-      //     //player4 win vs player2
-      //     else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer2[0].visible === true) {
-      //       if (jungleSpeed.keyPressedBeforePlayer2 === false) {
-      //         setTimeout(player4WinPlayer2, 2000);
-      //         return;
-      //       }
-      //     }
-      //     //player4 win vs player3
-      //     else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer3[0].visible === true) {
-      //       if (jungleSpeed.keyPressedBeforePlayer3 === false) {
-      //         setTimeout(player4WinPlayer3, 2000);
-      //         return;
-      //       }
-      //     }
-      //     //special card appears
-      //     // if (jungleSpeed.keyPressedBeforePlayer1 === true || jungleSpeed.keyPressedBeforePlayer2 === true || jungleSpeed.keyPressedBeforePlayer3 === true || jungleSpeed.keyPressedBeforePlayer4 === true) {
-      //     //   console.log("`+++INSIDE OF COMPUTER CAUSE ONE IS TRUE+++++`");
-      //     //   console.log(jungleSpeed.keyPressedBeforePlayer1);
-      //     //   console.log(jungleSpeed.keyPressedBeforePlayer2);
-      //     //   console.log(jungleSpeed.keyPressedBeforePlayer3);
-      //     //   console.log(jungleSpeed.keyPressedBeforePlayer4);
-      //     //   return;
-      //     // }
-      //     if (jungleSpeed.keyPressedBeforePlayer1 === false && jungleSpeed.keyPressedBeforePlayer2 === false && jungleSpeed.keyPressedBeforePlayer3 === false && jungleSpeed.keyPressedBeforePlayer4 === false) {
-      //         console.log("++++>FIRST INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
-      //         console.log(keyPressed);
-      //       if (jungleSpeed.stackPlayer1[0].family === "special" && jungleSpeed.stackPlayer1[0].visible === true) {
-      //
-      //         setTimeout(player4SpecialCard, 1500);
-      //         console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
-      //         console.log(jungleSpeed.keyPressedBeforePlayer1);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer2);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer3);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer4);
-      //         return;
-      //       }
-      //       else if (jungleSpeed.stackPlayer2[0].family === "special" && jungleSpeed.stackPlayer2[0].visible === true) {
-      //         setTimeout(player4SpecialCard, 1500);
-      //         console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
-      //         console.log(jungleSpeed.keyPressedBeforePlayer1);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer2);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer3);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer4);
-      //         return;
-      //       }
-      //       else if (jungleSpeed.stackPlayer3[0].family === "special" && jungleSpeed.stackPlayer3[0].visible === true) {
-      //         setTimeout(player4SpecialCard, 1500);
-      //         console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
-      //         console.log(jungleSpeed.keyPressedBeforePlayer1);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer2);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer3);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer4);
-      //         return;
-      //       }
-      //       else if (jungleSpeed.stackPlayer4[0].family === "special" && jungleSpeed.stackPlayer4[0].visible === true) {
-      //         setTimeout(player4SpecialCard, 1500);
-      //         console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
-      //         console.log(jungleSpeed.keyPressedBeforePlayer1);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer2);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer3);
-      //         console.log(jungleSpeed.keyPressedBeforePlayer4);
-      //         return;
-      //       }
-      //     }
-      //
-      //
-      //
-      //   if (randomLvl > 9) {
-      //     if (jungleSpeed.stackPlayer4[0].visible === false) {
-      //       return;
-      //     }
-      //     if (jungleSpeed.stackPlayer4[0].visible === true && (jungleSpeed.stackPlayer1[0].visible === false && jungleSpeed.stackPlayer2[0].visible === false && jungleSpeed.stackPlayer3[0].visible === false)) {
-      //       return;
-      //     }
-      //     //player4 fails
-      //
-      //     setTimeout(player4Fails, 1000);
-      //     return;
-      //   }
-      //
-      // }
+      if (jungleSpeed.playerArr[3].type === "cpu") {
+        // console.log("COMPUTER TURN");
+        // console.log(jungleSpeed.keyPressedBeforePlayer1);
+        // console.log(jungleSpeed.keyPressedBeforePlayer2);
+        // console.log(jungleSpeed.keyPressedBeforePlayer3);
+        // console.log(jungleSpeed.keyPressedBeforePlayer4);
+        // console.log("........................");
+
+        randomLvl = Math.floor((Math.random() * 10) + 1);
+        console.log(randomLvl);
+
+          //player4 win vs player1
+          if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer1[0].visible === true) {
+            if (jungleSpeed.keyPressedBeforePlayer1 === false) {
+              setTimeout(player4WinPlayer1, 2000);
+              return;
+            }
+          }
+          //player4 win vs player2
+          else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer2[0].visible === true) {
+            if (jungleSpeed.keyPressedBeforePlayer2 === false) {
+              setTimeout(player4WinPlayer2, 2000);
+              return;
+            }
+          }
+          //player4 win vs player3
+          else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer3[0].visible === true) {
+            if (jungleSpeed.keyPressedBeforePlayer3 === false) {
+              setTimeout(player4WinPlayer3, 2000);
+              return;
+            }
+          }
+
+
+          // special card appears
+          if (jungleSpeed.keyPressedBeforePlayer1 === true || jungleSpeed.keyPressedBeforePlayer2 === true || jungleSpeed.keyPressedBeforePlayer3 === true || jungleSpeed.keyPressedBeforePlayer4 === true) {
+            // console.log("`+++INSIDE OF COMPUTER CAUSE ONE IS TRUE+++++`");
+            // console.log(jungleSpeed.keyPressedBeforePlayer1);
+            // console.log(jungleSpeed.keyPressedBeforePlayer2);
+            // console.log(jungleSpeed.keyPressedBeforePlayer3);
+            // console.log(jungleSpeed.keyPressedBeforePlayer4);
+            return;
+          }
+          if (jungleSpeed.keyPressedBeforePlayer1 === false && jungleSpeed.keyPressedBeforePlayer2 === false && jungleSpeed.keyPressedBeforePlayer3 === false && jungleSpeed.keyPressedBeforePlayer4 === false) {
+              // console.log("++++>FIRST INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+              // console.log(keyPressed);
+            if (jungleSpeed.stackPlayer1[0].family === "special" && jungleSpeed.stackPlayer1[0].visible === true) {
+
+              setTimeout(player4SpecialCard, 1500);
+              // console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+              // console.log(jungleSpeed.keyPressedBeforePlayer1);
+              // console.log(jungleSpeed.keyPressedBeforePlayer2);
+              // console.log(jungleSpeed.keyPressedBeforePlayer3);
+              // console.log(jungleSpeed.keyPressedBeforePlayer4);
+              return;
+            }
+            else if (jungleSpeed.stackPlayer2[0].family === "special" && jungleSpeed.stackPlayer2[0].visible === true) {
+              setTimeout(player4SpecialCard, 1500);
+              // console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+              // console.log(jungleSpeed.keyPressedBeforePlayer1);
+              // console.log(jungleSpeed.keyPressedBeforePlayer2);
+              // console.log(jungleSpeed.keyPressedBeforePlayer3);
+              // console.log(jungleSpeed.keyPressedBeforePlayer4);
+              return;
+            }
+            else if (jungleSpeed.stackPlayer3[0].family === "special" && jungleSpeed.stackPlayer3[0].visible === true) {
+              setTimeout(player4SpecialCard, 1500);
+              // console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+              // console.log(jungleSpeed.keyPressedBeforePlayer1);
+              // console.log(jungleSpeed.keyPressedBeforePlayer2);
+              // console.log(jungleSpeed.keyPressedBeforePlayer3);
+              // console.log(jungleSpeed.keyPressedBeforePlayer4);
+              return;
+            }
+            else if (jungleSpeed.stackPlayer4[0].family === "special" && jungleSpeed.stackPlayer4[0].visible === true) {
+              setTimeout(player4SpecialCard, 1500);
+              // console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+              // console.log(jungleSpeed.keyPressedBeforePlayer1);
+              // console.log(jungleSpeed.keyPressedBeforePlayer2);
+              // console.log(jungleSpeed.keyPressedBeforePlayer3);
+              // console.log(jungleSpeed.keyPressedBeforePlayer4);
+              return;
+            }
+          }
+
+
+
+        if (randomLvl > 9) {
+          if (jungleSpeed.stackPlayer4[0].visible === false) {
+            return;
+          }
+          if (jungleSpeed.stackPlayer4[0].visible === true && (jungleSpeed.stackPlayer1[0].visible === false && jungleSpeed.stackPlayer2[0].visible === false && jungleSpeed.stackPlayer3[0].visible === false)) {
+            return;
+          }
+          //player4 fails
+
+          setTimeout(player4Fails, 1000);
+          return;
+        }
+
+      }
 
     });
 
@@ -732,7 +740,9 @@ function setAllPlayers(){
 
       }
       //special card appears
-      else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
+
+      else if ((jungleSpeed.stackPlayer1[0].family === "special" && jungleSpeed.stackPlayer1[0].visible === true) ||
+               (jungleSpeed.stackPlayer2[0].family === "special" && jungleSpeed.stackPlayer2[0].visible === true) || (jungleSpeed.stackPlayer3[0].family === "special" && jungleSpeed.stackPlayer3[0].visible === true) || (jungleSpeed.stackPlayer4[0].family === "special"  && jungleSpeed.stackPlayer4[0].visible === true)) {
         console.log("SPECIAL");
 
         randomPlayer = Math.floor((Math.random() * 3) + 1);
@@ -1009,7 +1019,8 @@ function setAllPlayers(){
       }
 
       //special card appears
-      else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
+      else if ((jungleSpeed.stackPlayer1[0].family === "special" && jungleSpeed.stackPlayer1[0].visible === true) ||
+               (jungleSpeed.stackPlayer2[0].family === "special" && jungleSpeed.stackPlayer2[0].visible === true) || (jungleSpeed.stackPlayer3[0].family === "special" && jungleSpeed.stackPlayer3[0].visible === true) || (jungleSpeed.stackPlayer4[0].family === "special" && jungleSpeed.stackPlayer4[0].visible === true)) {
         console.log("SPECIAL");
 
         randomPlayer = Math.floor((Math.random() * 3) + 1);
@@ -1269,7 +1280,8 @@ function setAllPlayers(){
 
 
       //special card appears
-      else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
+      else if ((jungleSpeed.stackPlayer1[0].family === "special" && jungleSpeed.stackPlayer1[0].visible === true) ||
+               (jungleSpeed.stackPlayer2[0].family === "special" && jungleSpeed.stackPlayer2[0].visible === true) || (jungleSpeed.stackPlayer3[0].family === "special" && jungleSpeed.stackPlayer3[0].visible === true) || (jungleSpeed.stackPlayer4[0].family === "special" && jungleSpeed.stackPlayer4[0].visible === true)) {
         console.log("SPECIAL");
 
         randomPlayer = Math.floor((Math.random() * 3) + 1);
@@ -1465,7 +1477,8 @@ function setAllPlayers(){
 
       }
       //special card appears
-      else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
+      else if ((jungleSpeed.stackPlayer1[0].family === "special" && jungleSpeed.stackPlayer1[0].visible === true) ||
+               (jungleSpeed.stackPlayer2[0].family === "special" && jungleSpeed.stackPlayer2[0].visible === true) || (jungleSpeed.stackPlayer3[0].family === "special" && jungleSpeed.stackPlayer3[0].visible === true) || (jungleSpeed.stackPlayer4[0].family === "special" && jungleSpeed.stackPlayer4[0].visible === true)) {
 
         player4SpecialCard();
 

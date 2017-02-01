@@ -33,3 +33,15 @@
 .turns-mode {
   padding-top: 30px;
 }
+
+.img-container {
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 400px;
+}
+
+.text-container{
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 40px;
+}
