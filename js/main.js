@@ -113,10 +113,10 @@ function JungleSpeed() {
   ];
 
   this.playerArr = [
-                    {name: "", type: "", lvl:""},
-                    {name: "", type: "", lvl:""},
-                    {name: "", type: "", lvl:""},
-                    {name: "", type: "", lvl:""}
+    {name: "", type: "", lvl:""},
+    {name: "", type: "", lvl:""},
+    {name: "", type: "", lvl:""},
+    {name: "", type: "", lvl:""}
   ];
 
   //those are the cards that players need to play, when it gets to 0, game ends
@@ -206,6 +206,7 @@ var stack4 = [];
 var playerArr = ["Computer 1", "Computer 2", "Computer 3", "Computer 4"];
 var turn = 0;
 var randomPlayer;
+var randomLvl;
 
 
 
@@ -266,796 +267,718 @@ function setAllPlayers(){
     if (jungleSpeed.playerArr[q].type === "human") {
       $('#names-to-play').append(
         '<div><h5>'+ jungleSpeed.playerArr[q].name  + ' will have the "' + playerKey[q] +'" key assigned</h5></div>');
-    } else{
-      $('#names-to-play').append(
-        '<div><h5>'+ jungleSpeed.playerArr[q].lvl + " " + jungleSpeed.playerArr[q].name  + ' will be the computer!</h5></div>');
-    }
+      } else{
+        $('#names-to-play').append(
+          '<div><h5>'+ jungleSpeed.playerArr[q].lvl + " " + jungleSpeed.playerArr[q].name  + ' will be the computer!</h5></div>');
+        }
 
-  }
-
-}
-
-
-  //check for the cpu lvl
-
-  function SetCpuLvl(){
-    var cpuLvl = $("#lvl-of-cpu").val();
-
-    var lvlCpu = computerLevel[cpuLvl];
-    console.log(lvlCpu);
-    for (var i = 0; i < 4; i++) {
-      if (jungleSpeed.playerArr[i].type === "cpu") {
-        jungleSpeed.playerArr[i].lvl = lvlCpu;
       }
+
     }
 
-    // $("#final-cpu-lvl").append('<div><h5>Will be playing with a ' + computerLevel[cpuLvl] + ' CPU</h5><h3>WHO WILL WIN?</h3></div>');
-  }
+
+    //check for the cpu lvl
+
+    function SetCpuLvl(){
+      var cpuLvl = $("#lvl-of-cpu").val();
+
+      var lvlCpu = computerLevel[cpuLvl];
+      console.log(lvlCpu);
+      for (var i = 0; i < 4; i++) {
+        if (jungleSpeed.playerArr[i].type === "cpu") {
+          jungleSpeed.playerArr[i].lvl = lvlCpu;
+        }
+      }
+
+      // $("#final-cpu-lvl").append('<div><h5>Will be playing with a ' + computerLevel[cpuLvl] + ' CPU</h5><h3>WHO WILL WIN?</h3></div>');
+    }
 
 
 
-// Get the number of players and ask every human player for his name and assign a key to every human
+    // Get the number of players and ask every human player for his name and assign a key to every human
 
-$( "#all-set" ).on('click', function() {
+    $( "#all-set" ).on('click', function() {
 
-  setAllPlayers();
+      setAllPlayers();
 
-  SetCpuLvl();
+      SetCpuLvl();
 
-  for (var q = 0; q < 4; q++) {
-    $("#player-"+(q+1)).append(jungleSpeed.playerArr[q].name);
-  }
+      for (var q = 0; q < 4; q++) {
+        $("#player-"+(q+1)).append(jungleSpeed.playerArr[q].name);
+      }
 
-    $('#play').removeClass("hide-container");
-    $('#play').addClass("show-container");
-
-
-});
-
-// --------------------------------------------------------
+      $('#play').removeClass("hide-container");
+      $('#play').addClass("show-container");
 
 
-//Click the play button, it will only appear if you set the number of players, after that, launch the board
+    });
 
-$( "#play" ).on('click', function() {
-
-  $("#first-screen").addClass("hide-container");
-  $("#board-screen").addClass("show-container");
-
-  //shuffle and get all stacks for each player
-  jungleSpeed.shuffleCards();
-  jungleSpeed.splitArray();
-
-  // add cards to each player
-  $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-
-  $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-
-  $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-
-  $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-
-});
-
-// -------------------------------------------------------
+    // --------------------------------------------------------
 
 
+    //Click the play button, it will only appear if you set the number of players, after that, launch the board
 
-// function to check what happen if i press space (change turn) and what happens if i press a key to claim for equal cards
+    $( "#play" ).on('click', function() {
 
-$(document).keypress(function(event){
+      $("#first-screen").addClass("hide-container");
+      $("#board-screen").addClass("show-container");
 
-  var keyPressed = event.key; //capture the key
+      //shuffle and get all stacks for each player
+      jungleSpeed.shuffleCards();
+      jungleSpeed.splitArray();
 
-  console.log(keyPressed);
-  $("#player-turn").empty(); // empty all the container
-
-//Win condition for each player
-
-  if (jungleSpeed.stackPlayer1.length === 0) {
-    alert("PLAYER 1 WIN!!!");
-  }
-  if (jungleSpeed.stackPlayer2.length === 0) {
-    alert("PLAYER 2 WIN!!!");
-  }
-  if (jungleSpeed.stackPlayer3.length === 0) {
-    alert("PLAYER 3 WIN!!!");
-  }
-  if (jungleSpeed.stackPlayer4.length === 0) {
-    alert("PLAYER 4 WIN!!!");
-  }
-
-  if (keyPressed === " ") {
-    turn ++;//increase the turn so it changes
-
-    switch (turn) { // switch between every turn
-      case 1:
-      $("#player-turn").append("IT'S " + jungleSpeed.playerArr[0].name + " TURN!");
-      $("#card-player-1").empty();
-      $("#cards-player-1").empty();
-
-      jungleSpeed.discardsPlayer1.push(jungleSpeed.stackPlayer1[0]);
-      jungleSpeed.stackPlayer1.shift();
-
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer1[0].name + '.jpg" alt="">');
-
+      // add cards to each player
       $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-
-      break;
-
-      case 2:
-      //check if there is a computer, then check the lvl of the computer. call the function something like, 80% of the times it's this turn, you call it, so it will only trigger it 80% of the turns you are in (maybe i can create a function that returns some wrong value, so it will miss everytim it gets on that %). in that function set a timeout, so it will trigger after some seconds
-      $("#player-turn").append("IT'S " + jungleSpeed.playerArr[1].name + " TURN!");
-      $("#card-player-2").empty();
-      $("#cards-player-2").empty();
-
-      jungleSpeed.discardsPlayer2.push(jungleSpeed.stackPlayer2[0]);
-      jungleSpeed.stackPlayer2.shift();
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer2[0].name + '.jpg" alt="">');
 
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
 
-      break;
-
-      case 3:
-      $("#player-turn").append("IT'S " + jungleSpeed.playerArr[2].name + " TURN!");
-      $("#card-player-3").empty();
-      $("#cards-player-3").empty();
-
-
-      jungleSpeed.discardsPlayer3.push(jungleSpeed.stackPlayer3[0]);
-      jungleSpeed.stackPlayer3.shift();
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer3[0].name + '.jpg" alt="">');
-
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-
-      break;
-
-      case 4:
-      turn = 0;
-      $("#player-turn").append("IT'S " + jungleSpeed.playerArr[3].name + " TURN!");
-      $("#card-player-4").empty();
-      $("#cards-player-4").empty();
-
-
-      jungleSpeed.discardsPlayer4.push(jungleSpeed.stackPlayer4[0]);
-      jungleSpeed.stackPlayer4.shift();
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer4[0].name + '.jpg" alt="">');
 
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
 
-      break;
-    }
-  }
+    });
 
-  switch (keyPressed) {
-    case "q": //player 1
+    // -------------------------------------------------------
 
-    player1Options();
 
-    break;
 
-    case "p": //player 2
+    // function to check what happen if i press space (change turn) and what happens if i press a key to claim for equal cards
 
-    player2Options();
+    $(document).keypress(function(event){
 
-    break;
+      var keyPressed = event.key; //capture the key
 
-    case "z"://player 3
+      console.log(keyPressed);
+      $("#player-turn").empty(); // empty all the container
 
-    player3Options();
+      //Win condition for each player
 
-    break;
+      // if (jungleSpeed.stackPlayer1.length === 0) {
+      //   alert("PLAYER 1 WIN!!!");
+      // }
+      // if (jungleSpeed.stackPlayer2.length === 0) {
+      //   alert("PLAYER 2 WIN!!!");
+      // }
+      // if (jungleSpeed.stackPlayer3.length === 0) {
+      //   alert("PLAYER 3 WIN!!!");
+      // }
+      // if (jungleSpeed.stackPlayer4.length === 0) {
+      //   alert("PLAYER 4 WIN!!!");
+      // }
 
-    case "m": //player 4
+      if (keyPressed === " ") {
+        turn ++;//increase the turn so it changes
 
-    player4Options();
+        switch (turn) { // switch between every turn
+          case 1:
+          $("#player-turn").append("IT'S " + jungleSpeed.playerArr[0].name + " TURN!");
+          $("#card-player-1").empty();
+          $("#cards-player-1").empty();
 
-    break;
-  }
+          jungleSpeed.discardsPlayer1.push(jungleSpeed.stackPlayer1[0]);
+          jungleSpeed.stackPlayer1.shift();
+
+          $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer1[0].name + '.jpg" alt="">');
+
+          $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
 
-});
+          break;
 
+          case 2:
+          //check if there is a computer, then check the lvl of the computer. call the function something like, 80% of the times it's this turn, you call it, so it will only trigger it 80% of the turns you are in (maybe i can create a function that returns some wrong value, so it will miss everytim it gets on that %). in that function set a timeout, so it will trigger after some seconds setTimeout(foo, 2000);
 
+          // if (jungleSpeed.playerArr[1].type === "cpu") {
+          //   setTimeout(player2Options, 3000);
+          // }
 
-function player1Options(){
+          $("#player-turn").append("IT'S " + jungleSpeed.playerArr[1].name + " TURN!");
+          $("#card-player-2").empty();
+          $("#cards-player-2").empty();
 
-  //player1 win vs player2
-  if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer2[0].family) {
+          jungleSpeed.discardsPlayer2.push(jungleSpeed.stackPlayer2[0]);
+          jungleSpeed.stackPlayer2.shift();
+          $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer2[0].name + '.jpg" alt="">');
 
-    //player 1 gives all his discards to player 2 stack
-    var discardPlayer1toPlayer2 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
+          $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
 
-    var newArrPlayer2 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2);
-    var finalArrPlayer2 = newArrPlayer2.concat(jungleSpeed.stackPlayer2);
-    jungleSpeed.stackPlayer2 = finalArrPlayer2;
-    jungleSpeed.discardsPlayer1 = [];
-    jungleSpeed.discardsPlayer2 = [];
+          break;
 
+          case 3:
 
-    //empty the container before refreshing it
-    $("#cards-player-2").empty();
-    $("#cards-player-1").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-    $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+          // if (jungleSpeed.playerArr[2].type === "cpu") {
+          //   setTimeout(player3Options, 3000);
+          // }
 
+          $("#player-turn").append("IT'S " + jungleSpeed.playerArr[2].name + " TURN!");
+          $("#card-player-3").empty();
+          $("#cards-player-3").empty();
 
-    alert("You had the same card of player 2 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
 
-  }
-  //player1 win vs player3
-  else if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer3[0].family) {
+          jungleSpeed.discardsPlayer3.push(jungleSpeed.stackPlayer3[0]);
+          jungleSpeed.stackPlayer3.shift();
+          $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer3[0].name + '.jpg" alt="">');
 
-    //player 1 gives all his discards to player 3 stack
-    var discardPlayer1toPlayer3 = jungleSpeed.discardsPlayer1.length;
-    var newArrPlayer3 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer3);
-    var finalArrPlayer3 = newArrPlayer3.concat(jungleSpeed.stackPlayer3);
-    jungleSpeed.stackPlayer3 = finalArrPlayer3;
-    jungleSpeed.discardsPlayer1 = [];
-    jungleSpeed.discardsPlayer3 = [];
-    //empty the container before refreshing it
-    $("#cards-player-3").empty();
-    $("#cards-player-1").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-    $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+          $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
 
+          break;
 
-    alert("You had the same card of player 3 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
-  }
-  //player1 win vs player4
-  else if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer4[0].family) {
+          case 4:
+          turn = 0;
 
-    //player 1 gives all his discards to player 4 stack
-    var discardPlayer1toPlayer4 = jungleSpeed.discardsPlayer1.length;
-    var newArrPlayer4 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer4);
-    var finalArrPlayer4 = newArrPlayer4.concat(jungleSpeed.stackPlayer4);
-    jungleSpeed.stackPlayer4 = finalArrPlayer4;
-    jungleSpeed.discardsPlayer1 = [];
-    jungleSpeed.discardsPlayer4 = [];
-    //empty the container before refreshing it
-    $("#cards-player-4").empty();
-    $("#cards-player-1").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-    $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+          $("#player-turn").append("IT'S " + jungleSpeed.playerArr[3].name + " TURN!");
+          $("#card-player-4").empty();
+          $("#cards-player-4").empty();
 
 
-    alert("You had the same card of player 4 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+          jungleSpeed.discardsPlayer4.push(jungleSpeed.stackPlayer4[0]);
+          jungleSpeed.stackPlayer4.shift();
+          $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer4[0].name + '.jpg" alt="">');
 
-  }
-  //special card appears
-  else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
-    console.log("SPECIAL");
+          $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
 
-    randomPlayer = Math.floor((Math.random() * 3) + 1);
-    console.log(randomPlayer);
-    if (randomPlayer === 1) {
-      //player 1 gives all his discards to player 2 stack
-      var discardRandomPlayer2 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
+          break;
+        }
+      }
 
-      var newRandomArrPlayer2 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2);
-      var finalRandomArrPlayer2 = newRandomArrPlayer2.concat(jungleSpeed.stackPlayer2);
-      jungleSpeed.stackPlayer2 = finalRandomArrPlayer2;
-      jungleSpeed.discardsPlayer1 = [];
-      jungleSpeed.discardsPlayer2 = [];
+      // if (jungleSpeed.playerArr[3].type === "cpu") {
+      //
+      //   randomLvl = Math.floor((Math.random() * 10) + 1);
+      //   console.log(randomLvl);
+      //   if (randomLvl <= 9) {
+      //
+      //     //player4 win vs player1
+      //     if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family) {
+      //
+      //       setTimeout(player4WinPlayer1, 2000);
+      //
+      //     }
+      //     //player4 win vs player2
+      //     else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family) {
+      //
+      //       setTimeout(player4WinPlayer2, 2000);
+      //
+      //     }
+      //     //player4 win vs player3
+      //     else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family) {
+      //
+      //       setTimeout(player4WinPlayer3, 2000);
+      //
+      //     }
+      //     //special card appears
+      //     else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
+      //
+      //       setTimeout(player4SpecialCard, 2000);
+      //
+      //     }
+      //
+      //   }
+      //   if (randomLvl === 10) {
+      //     //player4 fails
+      //
+      //     setTimeout(player4Fails, 1000);
+      //   }
+      //
+      // }
 
 
-      //empty the container before refreshing it
-      $("#cards-player-2").empty();
-      $("#cards-player-1").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-      $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+      //this should be only accesible if you are a human player
 
 
-      alert("The SPECIAL card appeared and player 1 clicked first\n Player 2 has been choose randomly so Player 1 pass " + discardRandomPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
-    }
+      switch (keyPressed) {
+        case "q": //player 1
 
-    if (randomPlayer === 2) {
-      //player 1 gives all his discards to player 2 stack
-      var discardRandomPlayer3 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
+        player1Options();
 
-      var newRandomArrPlayer3 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer3);
-      var finalRandomArrPlayer3 = newRandomArrPlayer3.concat(jungleSpeed.stackPlayer3);
-      jungleSpeed.stackPlayer3 = finalRandomArrPlayer3;
-      jungleSpeed.discardsPlayer1 = [];
-      jungleSpeed.discardsPlayer3 = [];
+        break;
 
+        case "p": //player 2
 
-      //empty the container before refreshing it
-      $("#cards-player-3").empty();
-      $("#cards-player-1").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-      $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+        player2Options();
 
+        break;
 
-      alert("The SPECIAL card appeared and player 1 clicked first\n Player 3 has been choose randomly so Player 1 pass " + discardRandomPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
-    }
-    if (randomPlayer === 3) {
-      //player 1 gives all his discards to player 2 stack
-      var discardRandomPlayer4 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
+        case "z"://player 3
 
-      var newRandomArrPlayer4 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer4);
-      var finalRandomArrPlayer4 = newRandomArrPlayer4.concat(jungleSpeed.stackPlayer4);
-      jungleSpeed.stackPlayer4 = finalRandomArrPlayer4;
-      jungleSpeed.discardsPlayer1 = [];
-      jungleSpeed.discardsPlayer4 = [];
+        player3Options();
 
+        break;
 
-      //empty the container before refreshing it
-      $("#cards-player-4").empty();
-      $("#cards-player-1").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-      $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        case "m": //player 4
 
+        player4Options();
 
-      alert("The SPECIAL card appeared and player 1 clicked first\n Player 4 has been choose randomly so Player 1 pass " + discardRandomPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
-    }
+        break;
+      }
 
+    });
 
-  }
-  //player1 fails
-  else if (jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer4[0].family) {
 
-    //player 1 will get all discards card from other players and add them to their stack cards
 
-    var newArrPlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4)));
-    var finalArrPlayer1 = newArrPlayer1.concat(jungleSpeed.stackPlayer1);
-    jungleSpeed.stackPlayer1 = finalArrPlayer1;
-    jungleSpeed.discardsPlayer1 = [];
-    jungleSpeed.discardsPlayer2 = [];
-    jungleSpeed.discardsPlayer3 = [];
-    jungleSpeed.discardsPlayer4 = [];
+    function player1Options(){
 
-    //empty the container before refreshing it
-    $("#cards-player-1").empty();
-    $("#cards-player-2").empty();
-    $("#cards-player-3").empty();
-    $("#cards-player-4").empty();
+      //player1 win vs player2
+      if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer2[0].family) {
 
-    //append the new results of cards-left and discards
-    $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-    $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-    $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-    $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        //player 1 gives all his discards to player 2 stack
+        var discardPlayer1toPlayer2 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
 
-    alert("Player 1 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer1.length + " cards left to win");
-  }
+        var newArrPlayer2 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2);
+        var finalArrPlayer2 = newArrPlayer2.concat(jungleSpeed.stackPlayer2);
+        jungleSpeed.stackPlayer2 = finalArrPlayer2;
+        jungleSpeed.discardsPlayer1 = [];
+        jungleSpeed.discardsPlayer2 = [];
 
 
-}
+        //empty the container before refreshing it
+        $("#cards-player-2").empty();
+        $("#cards-player-1").empty();
+        $("#card-player-2").empty();
+        $("#card-player-1").empty();
 
+        //append the new results of cards-left and discards
+        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
 
+        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
 
 
-function player2Options(){
-  //player2 win vs player1
-  if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer1[0].family) {
 
-    //player 2 gives all his discards to player 1 stack
-    var discardPlayer2toPlayer1 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
 
-    var newArrForPlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2);
-    var finalArrForPlayer1 = newArrForPlayer1.concat(jungleSpeed.stackPlayer1);
-    jungleSpeed.stackPlayer1 = finalArrForPlayer1;
-    jungleSpeed.discardsPlayer1 = [];
-    jungleSpeed.discardsPlayer2 = [];
+        alert("You had the same card of player 2 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
 
+        return true;
 
+      }
+      //player1 win vs player3
+      else if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer3[0].family) {
 
-    //empty the container before refreshing it
-    $("#cards-player-1").empty();
-    $("#cards-player-2").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-    $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+        //player 1 gives all his discards to player 3 stack
+        var discardPlayer1toPlayer3 = jungleSpeed.discardsPlayer1.length;
+        var newArrPlayer3 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer3);
+        var finalArrPlayer3 = newArrPlayer3.concat(jungleSpeed.stackPlayer3);
+        jungleSpeed.stackPlayer3 = finalArrPlayer3;
+        jungleSpeed.discardsPlayer1 = [];
+        jungleSpeed.discardsPlayer3 = [];
+        //empty the container before refreshing it
+        $("#cards-player-3").empty();
+        $("#cards-player-1").empty();
+        $("#card-player-3").empty();
+        $("#card-player-1").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
 
+        alert("You had the same card of player 3 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
 
-    alert("You had the same card of player 1 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+        return true;
 
+      }
+      //player1 win vs player4
+      else if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer4[0].family) {
 
-
-  }
-  //player2 win vs player3
-  else if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer3[0].family) {
-
-    //player 2 gives all his discards to player 3 stack
-    var discardPlayer2toPlayer3 = jungleSpeed.discardsPlayer2.length;
-    var newArrForPlayer3 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3);
-    var finalArrForPlayer3 = newArrForPlayer3.concat(jungleSpeed.stackPlayer3);
-    jungleSpeed.stackPlayer3 = finalArrForPlayer3;
-    jungleSpeed.discardsPlayer2 = [];
-    jungleSpeed.discardsPlayer3 = [];
-    //empty the container before refreshing it
-    $("#cards-player-3").empty();
-    $("#cards-player-2").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-    $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-
-
-    alert("You had the same card of player 3 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
-  }
-  //player2 win vs player4
-  else if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer4[0].family) {
-
-    //player 1 gives all his discards to player 4 stack
-    var discardPlayer2toPlayer4 = jungleSpeed.discardsPlayer2.length;
-    var newArrForPlayer4 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer4);
-    var finalArrForPlayer4 = newArrForPlayer4.concat(jungleSpeed.stackPlayer4);
-    jungleSpeed.stackPlayer4 = finalArrForPlayer4;
-    jungleSpeed.discardsPlayer2 = [];
-    jungleSpeed.discardsPlayer4 = [];
-    //empty the container before refreshing it
-    $("#cards-player-4").empty();
-    $("#cards-player-2").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-    $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-
-
-    alert("You had the same card of player 4 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
-
-  }
-
-  //special card appears
-  else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
-    console.log("SPECIAL");
-
-    randomPlayer = Math.floor((Math.random() * 3) + 1);
-
-    if (randomPlayer === 1) {
-      //player 1 gives all his discards to player 2 stack
-      var discardRandomPlayer1 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
-
-      var newRandomArrPlayer1 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer1);
-      var finalRandomArrPlayer1 = newRandomArrPlayer1.concat(jungleSpeed.stackPlayer1);
-      jungleSpeed.stackPlayer1 = finalRandomArrPlayer1;
-      jungleSpeed.discardsPlayer2 = [];
-      jungleSpeed.discardsPlayer1 = [];
-
-
-      //empty the container before refreshing it
-      $("#cards-player-1").empty();
-      $("#cards-player-2").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-      $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-
-
-      alert("The SPECIAL card appeared and player 2 clicked first\n Player 1 has been choosen randomly so Player 2 pass " + discardRandomPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
-    }
-
-    if (randomPlayer === 2) {
-      //player 2 gives all his discards to player 3 stack
-      var discardToRandomPlayer3 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
-
-      var newRandomArrToPlayer3 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3);
-      var finalRandomArrToPlayer3 = newRandomArrToPlayer3.concat(jungleSpeed.stackPlayer3);
-      jungleSpeed.stackPlayer3 = finalRandomArrToPlayer3;
-      jungleSpeed.discardsPlayer2 = [];
-      jungleSpeed.discardsPlayer3 = [];
-
-
-      //empty the container before refreshing it
-      $("#cards-player-3").empty();
-      $("#cards-player-2").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-      $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-
-
-      alert("The SPECIAL card appeared and player 2 clicked first\n Player 3 has been choose randomly so Player 2 pass " + discardToRandomPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
-    }
-    if (randomPlayer === 3) {
-      //player 1 gives all his discards to player 2 stack
-      var discardToRandomPlayer4 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
-
-      var newRandomArrToPlayer4 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer4);
-      var finalRandomArrToPlayer4 = newRandomArrToPlayer4.concat(jungleSpeed.stackPlayer4);
-      jungleSpeed.stackPlayer4 = finalRandomArrToPlayer4;
-      jungleSpeed.discardsPlayer2 = [];
-      jungleSpeed.discardsPlayer4 = [];
-
-
-      //empty the container before refreshing it
-      $("#cards-player-4").empty();
-      $("#cards-player-2").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-      $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-
-
-      alert("The SPECIAL card appeared and player 2 clicked first\n Player 4 has been choose randomly so Player 2 pass " + discardToRandomPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
-    }
-
-
-  }
-  //player2 fails
-  else if (jungleSpeed.stackPlayer2[0].family !== jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer2[0].family !== jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer2[0].family !== jungleSpeed.stackPlayer4[0].family) {
-
-    //player 2 will get all discards card from other players and add them to their stack cards
-
-    var newArrForPlayer2 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4)));
-    var finalArrForPlayer2 = newArrForPlayer2.concat(jungleSpeed.stackPlayer2);
-    jungleSpeed.stackPlayer2 = finalArrForPlayer2;
-    jungleSpeed.discardsPlayer1 = [];
-    jungleSpeed.discardsPlayer2 = [];
-    jungleSpeed.discardsPlayer3 = [];
-    jungleSpeed.discardsPlayer4 = [];
-
-    //empty the container before refreshing it
-    $("#cards-player-1").empty();
-    $("#cards-player-2").empty();
-    $("#cards-player-3").empty();
-    $("#cards-player-4").empty();
-
-    //append the new results of cards-left and discards
-    $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-    $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-    $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-    $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-
-    alert("Player 2 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer2.length + " cards left to win");
-  }
-
-}
-
-
-
-function player3Options(){
-
-  //player3 win vs player1
-  if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer1[0].family) {
-
-    //player 3 gives all his discards to player 1 stack
-    var discardPlayer3toPlayer1 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
-
-    var newArrToPlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer3);
-    var finalArrToPlayer1 = newArrToPlayer1.concat(jungleSpeed.stackPlayer1);
-    jungleSpeed.stackPlayer1 = finalArrToPlayer1;
-    jungleSpeed.discardsPlayer1 = [];
-    jungleSpeed.discardsPlayer3 = [];
-
-
-
-    //empty the container before refreshing it
-    $("#cards-player-1").empty();
-    $("#cards-player-3").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-    $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-
-
-    alert("You had the same card of player 1 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
-
-
-
-  }
-  //player3 win vs player2
-  else if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer2[0].family) {
-
-    //player 3 gives all his discards to player 2 stack
-    var discardPlayer3toPlayer2 = jungleSpeed.discardsPlayer3.length;
-    var newArrToPlayer2 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer2);
-    var finalArrToPlayer2 = newArrToPlayer2.concat(jungleSpeed.stackPlayer2);
-    jungleSpeed.stackPlayer2 = finalArrToPlayer2;
-    jungleSpeed.discardsPlayer3 = [];
-    jungleSpeed.discardsPlayer2 = [];
-    //empty the container before refreshing it
-    $("#cards-player-2").empty();
-    $("#cards-player-3").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-    $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-
-
-    alert("You had the same card of player 2 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
-  }
-  //player3 win vs player4
-  else if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer4[0].family) {
-
-    //player 3 gives all his discards to player 4 stack
-    var discardPlayer3toPlayer4 = jungleSpeed.discardsPlayer3.length;
-    var newArrToPlayer4 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4);
-    var finalArrToPlayer4 = newArrToPlayer4.concat(jungleSpeed.stackPlayer4);
-    jungleSpeed.stackPlayer4 = finalArrToPlayer4;
-    jungleSpeed.discardsPlayer3 = [];
-    jungleSpeed.discardsPlayer4 = [];
-    //empty the container before refreshing it
-    $("#cards-player-4").empty();
-    $("#cards-player-3").empty();
-    //append the new results of cards-left and discards
-    $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-    $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-
-
-    alert("You had the same card of player 4 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
-
-  }
-
-
-  //special card appears
-  else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
-    console.log("SPECIAL");
-
-    randomPlayer = Math.floor((Math.random() * 3) + 1);
-    console.log(randomPlayer);
-
-    if (randomPlayer === 1) {
-      //player 3 gives all his discards to player 1 stack
-      var discardRandomFromPlayer1 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
-
-      var newRandomArrFromPlayer1 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer1);
-      var finalRandomArrFromPlayer1 = newRandomArrFromPlayer1.concat(jungleSpeed.stackPlayer1);
-      jungleSpeed.stackPlayer1 = finalRandomArrFromPlayer1;
-      jungleSpeed.discardsPlayer3 = [];
-      jungleSpeed.discardsPlayer1 = [];
-
-
-      //empty the container before refreshing it
-      $("#cards-player-1").empty();
-      $("#cards-player-3").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-      $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-
-
-      alert("The SPECIAL card appeared and player 3 clicked first\n Player 1 has been choosen randomly so Player 3 pass " + discardRandomFromPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
-    }
-
-    if (randomPlayer === 2) {
-      //player 3 gives all his discards to player 2 stack
-      var discardToRandomPlayer2 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
-
-      var newRandomArrToPlayer2 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer2);
-      var finalRandomArrToPlayer2 = newRandomArrToPlayer2.concat(jungleSpeed.stackPlayer2);
-      jungleSpeed.stackPlayer2 = finalRandomArrToPlayer2;
-      jungleSpeed.discardsPlayer3 = [];
-      jungleSpeed.discardsPlayer2 = [];
-
-
-      //empty the container before refreshing it
-      $("#cards-player-2").empty();
-      $("#cards-player-3").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-      $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-
-
-      alert("The SPECIAL card appeared and player 3 clicked first\n Player 2 has been choose randomly so Player 3 pass " + discardToRandomPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
-    }
-    if (randomPlayer === 3) {
-      //player 3 gives all his discards to player 4 stack
-      var discardToRandomFromPlayer4 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
-
-      var newRandomArrFromPlayer4 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4);
-      var finalRandomArrFromPlayer4 = newRandomArrFromPlayer4.concat(jungleSpeed.stackPlayer4);
-      jungleSpeed.stackPlayer4 = finalRandomArrFromPlayer4;
-      jungleSpeed.discardsPlayer3 = [];
-      jungleSpeed.discardsPlayer4 = [];
-
-
-      //empty the container before refreshing it
-      $("#cards-player-4").empty();
-      $("#cards-player-3").empty();
-      //append the new results of cards-left and discards
-      $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-      $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-
-
-      alert("The SPECIAL card appeared and player 3 clicked first\n Player 4 has been choose randomly so Player 3 pass " + discardToRandomFromPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
-    }
-
-
-  }
-
-  //player3 fails
-  else if (jungleSpeed.stackPlayer3[0].family !== jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer3[0].family !== jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer3[0].family !== jungleSpeed.stackPlayer4[0].family) {
-
-    //player 3 will get all discards card from other players and add them to their stack cards
-
-    var newArrToPlayer3 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer4)));
-    var finalArrToPlayer3 = newArrToPlayer3.concat(jungleSpeed.stackPlayer3);
-    jungleSpeed.stackPlayer3 = finalArrToPlayer3;
-    jungleSpeed.discardsPlayer1 = [];
-    jungleSpeed.discardsPlayer2 = [];
-    jungleSpeed.discardsPlayer3 = [];
-    jungleSpeed.discardsPlayer4 = [];
-
-    //empty the container before refreshing it
-    $("#cards-player-1").empty();
-    $("#cards-player-2").empty();
-    $("#cards-player-3").empty();
-    $("#cards-player-4").empty();
-
-    //append the new results of cards-left and discards
-    $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-    $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-    $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-    $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-
-    alert("Player 3 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer3.length + " cards left to win");
-  }
-
-
-}
-
-
-
-function player4Options(){
-
-
-      //player4 win vs player1
-      if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family) {
-
-        //player 4 gives all his discards to player 1 stack
-        var discardPlayer4toPlayer1 = jungleSpeed.discardsPlayer4.length;//only for visual purposes
-
-        var newArrToThePlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer4);
-        var finalArrToThePlayer1 = newArrToThePlayer1.concat(jungleSpeed.stackPlayer1);
-        jungleSpeed.stackPlayer1 = finalArrToThePlayer1;
+        //player 1 gives all his discards to player 4 stack
+        var discardPlayer1toPlayer4 = jungleSpeed.discardsPlayer1.length;
+        var newArrPlayer4 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer4);
+        var finalArrPlayer4 = newArrPlayer4.concat(jungleSpeed.stackPlayer4);
+        jungleSpeed.stackPlayer4 = finalArrPlayer4;
         jungleSpeed.discardsPlayer1 = [];
         jungleSpeed.discardsPlayer4 = [];
+        //empty the container before refreshing it
+        $("#cards-player-4").empty();
+        $("#cards-player-1").empty();
+        $("#card-player-4").empty();
+        $("#card-player-1").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+
+
+        alert("You had the same card of player 4 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+        return true;
+
+      }
+      //special card appears
+      else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
+        console.log("SPECIAL");
+
+        randomPlayer = Math.floor((Math.random() * 3) + 1);
+        console.log(randomPlayer);
+        if (randomPlayer === 1) {
+          //player 1 gives all his discards to player 2 stack
+          var discardRandomPlayer2 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
+
+          var newRandomArrPlayer2 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2);
+          var finalRandomArrPlayer2 = newRandomArrPlayer2.concat(jungleSpeed.stackPlayer2);
+          jungleSpeed.stackPlayer2 = finalRandomArrPlayer2;
+          jungleSpeed.discardsPlayer1 = [];
+          jungleSpeed.discardsPlayer2 = [];
+
+
+          //empty the container before refreshing it
+          $("#cards-player-2").empty();
+          $("#cards-player-1").empty();
+          $("#card-player-2").empty();
+          $("#card-player-1").empty();
+          //append the new results of cards-left and discards
+          $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+          $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+          $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+          $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+
+
+          alert("The SPECIAL card appeared and player 1 clicked first\n Player 2 has been choose randomly so Player 1 pass " + discardRandomPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+
+        }
+
+        if (randomPlayer === 2) {
+          //player 1 gives all his discards to player 2 stack
+          var discardRandomPlayer3 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
+
+          var newRandomArrPlayer3 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer3);
+          var finalRandomArrPlayer3 = newRandomArrPlayer3.concat(jungleSpeed.stackPlayer3);
+          jungleSpeed.stackPlayer3 = finalRandomArrPlayer3;
+          jungleSpeed.discardsPlayer1 = [];
+          jungleSpeed.discardsPlayer3 = [];
+
+
+          //empty the container before refreshing it
+          $("#cards-player-3").empty();
+          $("#cards-player-1").empty();
+          $("#card-player-3").empty();
+          $("#card-player-1").empty();
+          //append the new results of cards-left and discards
+          $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+          $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+          $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+          $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+
+
+          alert("The SPECIAL card appeared and player 1 clicked first\n Player 3 has been choose randomly so Player 1 pass " + discardRandomPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+        }
+        if (randomPlayer === 3) {
+          //player 1 gives all his discards to player 2 stack
+          var discardRandomPlayer4 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
+
+          var newRandomArrPlayer4 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer4);
+          var finalRandomArrPlayer4 = newRandomArrPlayer4.concat(jungleSpeed.stackPlayer4);
+          jungleSpeed.stackPlayer4 = finalRandomArrPlayer4;
+          jungleSpeed.discardsPlayer1 = [];
+          jungleSpeed.discardsPlayer4 = [];
+
+
+          //empty the container before refreshing it
+          $("#cards-player-4").empty();
+          $("#cards-player-1").empty();
+          $("#card-player-4").empty();
+          $("#card-player-1").empty();
+          //append the new results of cards-left and discards
+          $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+          $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+          $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+          $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+
+
+          alert("The SPECIAL card appeared and player 1 clicked first\n Player 4 has been choose randomly so Player 1 pass " + discardRandomPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+        }
+
+        return true;
+
+      }
+      //player1 fails
+      else if (jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer1[0].family !== jungleSpeed.stackPlayer4[0].family) {
+
+        //player 1 will get all discards card from other players and add them to their stack cards
+
+        var newArrPlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4)));
+        var finalArrPlayer1 = newArrPlayer1.concat(jungleSpeed.stackPlayer1);
+        jungleSpeed.stackPlayer1 = finalArrPlayer1;
+        jungleSpeed.discardsPlayer1 = [];
+        jungleSpeed.discardsPlayer2 = [];
+        jungleSpeed.discardsPlayer3 = [];
+        jungleSpeed.discardsPlayer4 = [];
+
+        //empty the container before refreshing it
+        $("#cards-player-1").empty();
+        $("#cards-player-2").empty();
+        $("#cards-player-3").empty();
+        $("#cards-player-4").empty();
+        $("#card-player-1").empty();
+        $("#card-player-2").empty();
+        $("#card-player-3").empty();
+        $("#card-player-4").empty();
+
+        //append the new results of cards-left and discards
+        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/card1.jpg" alt="">');
+
+        alert("Player 1 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer1.length + " cards left to win");
+
+        return false;
+
+
+      }
+
+
+    }
+
+
+
+
+    function player2Options(){
+      //player2 win vs player1
+      if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer1[0].family) {
+
+        //player 2 gives all his discards to player 1 stack
+        var discardPlayer2toPlayer1 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
+
+        var newArrForPlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2);
+        var finalArrForPlayer1 = newArrForPlayer1.concat(jungleSpeed.stackPlayer1);
+        jungleSpeed.stackPlayer1 = finalArrForPlayer1;
+        jungleSpeed.discardsPlayer1 = [];
+        jungleSpeed.discardsPlayer2 = [];
 
 
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
-        $("#cards-player-4").empty();
+        $("#cards-player-2").empty();
         //append the new results of cards-left and discards
-        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
 
 
-        alert("You had the same card of player 1 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+        alert("You had the same card of player 1 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
 
 
 
       }
-      //player4 win vs player2
-      else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family) {
+      //player2 win vs player3
+      else if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer3[0].family) {
 
-        //player 4 gives all his discards to player 2 stack
-        var discardPlayer4toPlayer2 = jungleSpeed.discardsPlayer4.length;
-        var newArrToThePlayer2 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer4);
-        var finalArrToThePlayer2 = newArrToThePlayer2.concat(jungleSpeed.stackPlayer2);
-        jungleSpeed.stackPlayer2 = finalArrToThePlayer2;
-        jungleSpeed.discardsPlayer4 = [];
+        //player 2 gives all his discards to player 3 stack
+        var discardPlayer2toPlayer3 = jungleSpeed.discardsPlayer2.length;
+        var newArrForPlayer3 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3);
+        var finalArrForPlayer3 = newArrForPlayer3.concat(jungleSpeed.stackPlayer3);
+        jungleSpeed.stackPlayer3 = finalArrForPlayer3;
         jungleSpeed.discardsPlayer2 = [];
-        //empty the container before refreshing it
-        $("#cards-player-2").empty();
-        $("#cards-player-4").empty();
-        //append the new results of cards-left and discards
-        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-
-
-        alert("You had the same card of player 2 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
-      }
-      //player4 win vs player3
-      else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family) {
-
-        //player 4 gives all his discards to player 3 stack
-        var discardPlayer4toPlayer3 = jungleSpeed.discardsPlayer4.length;
-        var newArrToThePlayer3 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4);
-        var finalArrToThePlayer3 = newArrToThePlayer3.concat(jungleSpeed.stackPlayer3);
-        jungleSpeed.stackPlayer3 = finalArrToThePlayer3;
-        jungleSpeed.discardsPlayer4 = [];
         jungleSpeed.discardsPlayer3 = [];
         //empty the container before refreshing it
         $("#cards-player-3").empty();
-        $("#cards-player-4").empty();
+        $("#cards-player-2").empty();
         //append the new results of cards-left and discards
-        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
 
 
-        alert("You had the same card of player 3 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+        alert("You had the same card of player 3 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+      }
+      //player2 win vs player4
+      else if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer4[0].family) {
+
+        //player 1 gives all his discards to player 4 stack
+        var discardPlayer2toPlayer4 = jungleSpeed.discardsPlayer2.length;
+        var newArrForPlayer4 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer4);
+        var finalArrForPlayer4 = newArrForPlayer4.concat(jungleSpeed.stackPlayer4);
+        jungleSpeed.stackPlayer4 = finalArrForPlayer4;
+        jungleSpeed.discardsPlayer2 = [];
+        jungleSpeed.discardsPlayer4 = [];
+        //empty the container before refreshing it
+        $("#cards-player-4").empty();
+        $("#cards-player-2").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
+
+        alert("You had the same card of player 4 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+      }
+
+      //special card appears
+      else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
+        console.log("SPECIAL");
+
+        randomPlayer = Math.floor((Math.random() * 3) + 1);
+
+        if (randomPlayer === 1) {
+          //player 1 gives all his discards to player 2 stack
+          var discardRandomPlayer1 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
+
+          var newRandomArrPlayer1 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer1);
+          var finalRandomArrPlayer1 = newRandomArrPlayer1.concat(jungleSpeed.stackPlayer1);
+          jungleSpeed.stackPlayer1 = finalRandomArrPlayer1;
+          jungleSpeed.discardsPlayer2 = [];
+          jungleSpeed.discardsPlayer1 = [];
+
+
+          //empty the container before refreshing it
+          $("#cards-player-1").empty();
+          $("#cards-player-2").empty();
+          //append the new results of cards-left and discards
+          $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+          $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+
+
+          alert("The SPECIAL card appeared and player 2 clicked first\n Player 1 has been choosen randomly so Player 2 pass " + discardRandomPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+        }
+
+        if (randomPlayer === 2) {
+          //player 2 gives all his discards to player 3 stack
+          var discardToRandomPlayer3 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
+
+          var newRandomArrToPlayer3 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3);
+          var finalRandomArrToPlayer3 = newRandomArrToPlayer3.concat(jungleSpeed.stackPlayer3);
+          jungleSpeed.stackPlayer3 = finalRandomArrToPlayer3;
+          jungleSpeed.discardsPlayer2 = [];
+          jungleSpeed.discardsPlayer3 = [];
+
+
+          //empty the container before refreshing it
+          $("#cards-player-3").empty();
+          $("#cards-player-2").empty();
+          //append the new results of cards-left and discards
+          $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+          $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+
+
+          alert("The SPECIAL card appeared and player 2 clicked first\n Player 3 has been choose randomly so Player 2 pass " + discardToRandomPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+        }
+        if (randomPlayer === 3) {
+          //player 1 gives all his discards to player 2 stack
+          var discardToRandomPlayer4 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
+
+          var newRandomArrToPlayer4 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer4);
+          var finalRandomArrToPlayer4 = newRandomArrToPlayer4.concat(jungleSpeed.stackPlayer4);
+          jungleSpeed.stackPlayer4 = finalRandomArrToPlayer4;
+          jungleSpeed.discardsPlayer2 = [];
+          jungleSpeed.discardsPlayer4 = [];
+
+
+          //empty the container before refreshing it
+          $("#cards-player-4").empty();
+          $("#cards-player-2").empty();
+          //append the new results of cards-left and discards
+          $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+          $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
+
+          alert("The SPECIAL card appeared and player 2 clicked first\n Player 4 has been choose randomly so Player 2 pass " + discardToRandomPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+        }
+
+
+      }
+      //player2 fails
+      else if (jungleSpeed.stackPlayer2[0].family !== jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer2[0].family !== jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer2[0].family !== jungleSpeed.stackPlayer4[0].family) {
+
+        //player 2 will get all discards card from other players and add them to their stack cards
+
+        var newArrForPlayer2 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4)));
+        var finalArrForPlayer2 = newArrForPlayer2.concat(jungleSpeed.stackPlayer2);
+        jungleSpeed.stackPlayer2 = finalArrForPlayer2;
+        jungleSpeed.discardsPlayer1 = [];
+        jungleSpeed.discardsPlayer2 = [];
+        jungleSpeed.discardsPlayer3 = [];
+        jungleSpeed.discardsPlayer4 = [];
+
+        //empty the container before refreshing it
+        $("#cards-player-1").empty();
+        $("#cards-player-2").empty();
+        $("#cards-player-3").empty();
+        $("#cards-player-4").empty();
+
+        //append the new results of cards-left and discards
+        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
+        alert("Player 2 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer2.length + " cards left to win");
+      }
+
+    }
+
+
+
+    function player3Options(){
+
+      //player3 win vs player1
+      if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer1[0].family) {
+
+        //player 3 gives all his discards to player 1 stack
+        var discardPlayer3toPlayer1 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
+
+        var newArrToPlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer3);
+        var finalArrToPlayer1 = newArrToPlayer1.concat(jungleSpeed.stackPlayer1);
+        jungleSpeed.stackPlayer1 = finalArrToPlayer1;
+        jungleSpeed.discardsPlayer1 = [];
+        jungleSpeed.discardsPlayer3 = [];
+
+
+
+        //empty the container before refreshing it
+        $("#cards-player-1").empty();
+        $("#cards-player-3").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+
+
+        alert("You had the same card of player 1 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+
+
+
+      }
+      //player3 win vs player2
+      else if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer2[0].family) {
+
+        //player 3 gives all his discards to player 2 stack
+        var discardPlayer3toPlayer2 = jungleSpeed.discardsPlayer3.length;
+        var newArrToPlayer2 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer2);
+        var finalArrToPlayer2 = newArrToPlayer2.concat(jungleSpeed.stackPlayer2);
+        jungleSpeed.stackPlayer2 = finalArrToPlayer2;
+        jungleSpeed.discardsPlayer3 = [];
+        jungleSpeed.discardsPlayer2 = [];
+        //empty the container before refreshing it
+        $("#cards-player-2").empty();
+        $("#cards-player-3").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+
+
+        alert("You had the same card of player 2 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+      }
+      //player3 win vs player4
+      else if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer4[0].family) {
+
+        //player 3 gives all his discards to player 4 stack
+        var discardPlayer3toPlayer4 = jungleSpeed.discardsPlayer3.length;
+        var newArrToPlayer4 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4);
+        var finalArrToPlayer4 = newArrToPlayer4.concat(jungleSpeed.stackPlayer4);
+        jungleSpeed.stackPlayer4 = finalArrToPlayer4;
+        jungleSpeed.discardsPlayer3 = [];
+        jungleSpeed.discardsPlayer4 = [];
+        //empty the container before refreshing it
+        $("#cards-player-4").empty();
+        $("#cards-player-3").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
+
+        alert("You had the same card of player 4 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
 
       }
 
@@ -1066,82 +989,83 @@ function player4Options(){
 
         randomPlayer = Math.floor((Math.random() * 3) + 1);
         console.log(randomPlayer);
+
         if (randomPlayer === 1) {
-          //player 4 gives all his discards to player 2 stack
-          var discardRandomChosenPlayer2 = jungleSpeed.discardsPlayer4.length;//only for visual purposes
+          //player 3 gives all his discards to player 1 stack
+          var discardRandomFromPlayer1 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
 
-          var newRandomChosenArrPlayer2 = jungleSpeed.discardsPlayer4.concat(jungleSpeed.discardsPlayer2);
-          var finalRandomChosenArrPlayer2 = newRandomChosenArrPlayer2.concat(jungleSpeed.stackPlayer2);
-          jungleSpeed.stackPlayer2 = finalRandomChosenArrPlayer2;
-          jungleSpeed.discardsPlayer4 = [];
-          jungleSpeed.discardsPlayer2 = [];
-
-
-          //empty the container before refreshing it
-          $("#cards-player-2").empty();
-          $("#cards-player-4").empty();
-          //append the new results of cards-left and discards
-          $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-          $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-
-
-          alert("The SPECIAL card appeared and player 4 clicked first\n Player 2 has been choose randomly so Player 4 pass " + discardRandomChosenPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
-        }
-
-        if (randomPlayer === 2) {
-          //player 4 gives all his discards to player 3 stack
-          var discardRandomChosenPlayer3 = jungleSpeed.discardsPlayer4.length;//only for visual purposes
-
-          var newRandomChosenArrPlayer3 = jungleSpeed.discardsPlayer4.concat(jungleSpeed.discardsPlayer3);
-          var finalRandomChosenArrPlayer3 = newRandomChosenArrPlayer3.concat(jungleSpeed.stackPlayer3);
-          jungleSpeed.stackPlayer3 = finalRandomChosenArrPlayer3;
-          jungleSpeed.discardsPlayer4 = [];
+          var newRandomArrFromPlayer1 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer1);
+          var finalRandomArrFromPlayer1 = newRandomArrFromPlayer1.concat(jungleSpeed.stackPlayer1);
+          jungleSpeed.stackPlayer1 = finalRandomArrFromPlayer1;
           jungleSpeed.discardsPlayer3 = [];
-
-
-          //empty the container before refreshing it
-          $("#cards-player-3").empty();
-          $("#cards-player-4").empty();
-          //append the new results of cards-left and discards
-          $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-          $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-
-
-          alert("The SPECIAL card appeared and player 4 clicked first\n Player 3 has been choose randomly so Player 4 pass " + discardRandomChosenPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
-        }
-        if (randomPlayer === 3) {
-          //player 1 gives all his discards to player 2 stack
-          var discardRandomChosenPlayer1 = jungleSpeed.discardsPlayer4.length;//only for visual purposes
-
-          var newRandomChosenArrPlayer1 = jungleSpeed.discardsPlayer4.concat(jungleSpeed.discardsPlayer1);
-          var finalRandomChosenArrPlayer1 = newRandomChosenArrPlayer1.concat(jungleSpeed.stackPlayer1);
-          jungleSpeed.stackPlayer1 = finalRandomChosenArrPlayer1;
-          jungleSpeed.discardsPlayer4 = [];
           jungleSpeed.discardsPlayer1 = [];
 
 
           //empty the container before refreshing it
           $("#cards-player-1").empty();
-          $("#cards-player-4").empty();
+          $("#cards-player-3").empty();
           //append the new results of cards-left and discards
-          $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+          $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
           $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
 
 
-          alert("The SPECIAL card appeared and player 1 clicked first\n Player 4 has been choose randomly so Player 1 pass " + discardRandomChosenPlayer1 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+          alert("The SPECIAL card appeared and player 3 clicked first\n Player 1 has been choosen randomly so Player 3 pass " + discardRandomFromPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+        }
+
+        if (randomPlayer === 2) {
+          //player 3 gives all his discards to player 2 stack
+          var discardToRandomPlayer2 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
+
+          var newRandomArrToPlayer2 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer2);
+          var finalRandomArrToPlayer2 = newRandomArrToPlayer2.concat(jungleSpeed.stackPlayer2);
+          jungleSpeed.stackPlayer2 = finalRandomArrToPlayer2;
+          jungleSpeed.discardsPlayer3 = [];
+          jungleSpeed.discardsPlayer2 = [];
+
+
+          //empty the container before refreshing it
+          $("#cards-player-2").empty();
+          $("#cards-player-3").empty();
+          //append the new results of cards-left and discards
+          $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+          $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+
+
+          alert("The SPECIAL card appeared and player 3 clicked first\n Player 2 has been choose randomly so Player 3 pass " + discardToRandomPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+        }
+        if (randomPlayer === 3) {
+          //player 3 gives all his discards to player 4 stack
+          var discardToRandomFromPlayer4 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
+
+          var newRandomArrFromPlayer4 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4);
+          var finalRandomArrFromPlayer4 = newRandomArrFromPlayer4.concat(jungleSpeed.stackPlayer4);
+          jungleSpeed.stackPlayer4 = finalRandomArrFromPlayer4;
+          jungleSpeed.discardsPlayer3 = [];
+          jungleSpeed.discardsPlayer4 = [];
+
+
+          //empty the container before refreshing it
+          $("#cards-player-4").empty();
+          $("#cards-player-3").empty();
+          //append the new results of cards-left and discards
+          $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+          $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
+
+          alert("The SPECIAL card appeared and player 3 clicked first\n Player 4 has been choose randomly so Player 3 pass " + discardToRandomFromPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
         }
 
 
       }
 
-      //player4 fails
-      else if (jungleSpeed.stackPlayer4[0].family !== jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer4[0].family !== jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer4[0].family !== jungleSpeed.stackPlayer3[0].family) {
+      //player3 fails
+      else if (jungleSpeed.stackPlayer3[0].family !== jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer3[0].family !== jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer3[0].family !== jungleSpeed.stackPlayer4[0].family) {
 
-        //player 4 will get all discards card from other players and add them to their stack cards
+        //player 3 will get all discards card from other players and add them to their stack cards
 
-        var newArrForThePlayer4 = jungleSpeed.discardsPlayer4.concat(jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3)));
-        var finalArrToThePlayer4 = newArrForThePlayer4.concat(jungleSpeed.stackPlayer4);
-        jungleSpeed.stackPlayer4 = finalArrToThePlayer4;
+        var newArrToPlayer3 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer4)));
+        var finalArrToPlayer3 = newArrToPlayer3.concat(jungleSpeed.stackPlayer3);
+        jungleSpeed.stackPlayer3 = finalArrToPlayer3;
         jungleSpeed.discardsPlayer1 = [];
         jungleSpeed.discardsPlayer2 = [];
         jungleSpeed.discardsPlayer3 = [];
@@ -1159,11 +1083,222 @@ function player4Options(){
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
 
-        alert("Player 4 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer4.length + " cards left to win");
+        alert("Player 3 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer3.length + " cards left to win");
       }
 
 
-}
+    }
 
 
-  // wait till you click the play button, then launch the board page
+
+    function player4Options(){
+
+
+      //player4 win vs player1
+      if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family) {
+
+        player4WinPlayer1();
+
+      }
+      //player4 win vs player2
+      else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family) {
+
+        player4WinPlayer2();
+
+      }
+      //player4 win vs player3
+      else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family) {
+
+        player4WinPlayer3();
+
+      }
+      //special card appears
+      else if (jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special") {
+
+        player4SpecialCard();
+
+      }
+      //player4 fails
+      else if (jungleSpeed.stackPlayer4[0].family !== jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer4[0].family !== jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer4[0].family !== jungleSpeed.stackPlayer3[0].family) {
+
+        player4Fails();
+
+      }
+    }
+
+
+
+
+
+
+
+    function player4WinPlayer1(){
+
+      //player 4 gives all his discards to player 1 stack
+      var discardPlayer4toPlayer1 = jungleSpeed.discardsPlayer4.length;//only for visual purposes
+
+      var newArrToThePlayer1 = jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer4);
+      var finalArrToThePlayer1 = newArrToThePlayer1.concat(jungleSpeed.stackPlayer1);
+      jungleSpeed.stackPlayer1 = finalArrToThePlayer1;
+      jungleSpeed.discardsPlayer1 = [];
+      jungleSpeed.discardsPlayer4 = [];
+
+
+
+      //empty the container before refreshing it
+      $("#cards-player-1").empty();
+      $("#cards-player-4").empty();
+      //append the new results of cards-left and discards
+      $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+      $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+
+
+      alert("You had the same card of player 1 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+
+
+
+
+    }
+
+    function player4WinPlayer2(){
+
+      //player 4 gives all his discards to player 2 stack
+      var discardPlayer4toPlayer2 = jungleSpeed.discardsPlayer4.length;
+      var newArrToThePlayer2 = jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer4);
+      var finalArrToThePlayer2 = newArrToThePlayer2.concat(jungleSpeed.stackPlayer2);
+      jungleSpeed.stackPlayer2 = finalArrToThePlayer2;
+      jungleSpeed.discardsPlayer4 = [];
+      jungleSpeed.discardsPlayer2 = [];
+      //empty the container before refreshing it
+      $("#cards-player-2").empty();
+      $("#cards-player-4").empty();
+      //append the new results of cards-left and discards
+      $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+      $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+
+
+      alert("You had the same card of player 2 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+
+    }
+
+    function player4WinPlayer3(){
+
+      //player 4 gives all his discards to player 3 stack
+      var discardPlayer4toPlayer3 = jungleSpeed.discardsPlayer4.length;
+      var newArrToThePlayer3 = jungleSpeed.discardsPlayer3.concat(jungleSpeed.discardsPlayer4);
+      var finalArrToThePlayer3 = newArrToThePlayer3.concat(jungleSpeed.stackPlayer3);
+      jungleSpeed.stackPlayer3 = finalArrToThePlayer3;
+      jungleSpeed.discardsPlayer4 = [];
+      jungleSpeed.discardsPlayer3 = [];
+      //empty the container before refreshing it
+      $("#cards-player-3").empty();
+      $("#cards-player-4").empty();
+      //append the new results of cards-left and discards
+      $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+      $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+
+
+      alert("You had the same card of player 3 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+
+    }
+
+    function player4SpecialCard(){
+
+      randomPlayer = Math.floor((Math.random() * 3) + 1);
+      if (randomPlayer === 1) {
+        //player 4 gives all his discards to player 2 stack
+        var discardRandomChosenPlayer2 = jungleSpeed.discardsPlayer4.length;//only for visual purposes
+
+        var newRandomChosenArrPlayer2 = jungleSpeed.discardsPlayer4.concat(jungleSpeed.discardsPlayer2);
+        var finalRandomChosenArrPlayer2 = newRandomChosenArrPlayer2.concat(jungleSpeed.stackPlayer2);
+        jungleSpeed.stackPlayer2 = finalRandomChosenArrPlayer2;
+        jungleSpeed.discardsPlayer4 = [];
+        jungleSpeed.discardsPlayer2 = [];
+
+
+        //empty the container before refreshing it
+        $("#cards-player-2").empty();
+        $("#cards-player-4").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+
+
+        alert("The SPECIAL card appeared and player 4 clicked first\n Player 2 has been choose randomly so Player 4 pass " + discardRandomChosenPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+      }
+
+      if (randomPlayer === 2) {
+        //player 4 gives all his discards to player 3 stack
+        var discardRandomChosenPlayer3 = jungleSpeed.discardsPlayer4.length;//only for visual purposes
+
+        var newRandomChosenArrPlayer3 = jungleSpeed.discardsPlayer4.concat(jungleSpeed.discardsPlayer3);
+        var finalRandomChosenArrPlayer3 = newRandomChosenArrPlayer3.concat(jungleSpeed.stackPlayer3);
+        jungleSpeed.stackPlayer3 = finalRandomChosenArrPlayer3;
+        jungleSpeed.discardsPlayer4 = [];
+        jungleSpeed.discardsPlayer3 = [];
+
+
+        //empty the container before refreshing it
+        $("#cards-player-3").empty();
+        $("#cards-player-4").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+
+
+        alert("The SPECIAL card appeared and player 4 clicked first\n Player 3 has been choose randomly so Player 4 pass " + discardRandomChosenPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+      }
+      if (randomPlayer === 3) {
+        //player 1 gives all his discards to player 2 stack
+        var discardRandomChosenPlayer1 = jungleSpeed.discardsPlayer4.length;//only for visual purposes
+
+        var newRandomChosenArrPlayer1 = jungleSpeed.discardsPlayer4.concat(jungleSpeed.discardsPlayer1);
+        var finalRandomChosenArrPlayer1 = newRandomChosenArrPlayer1.concat(jungleSpeed.stackPlayer1);
+        jungleSpeed.stackPlayer1 = finalRandomChosenArrPlayer1;
+        jungleSpeed.discardsPlayer4 = [];
+        jungleSpeed.discardsPlayer1 = [];
+
+
+        //empty the container before refreshing it
+        $("#cards-player-1").empty();
+        $("#cards-player-4").empty();
+        //append the new results of cards-left and discards
+        $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+        $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+
+
+        alert("The SPECIAL card appeared and player 4 clicked first\n Player 4 has been choose randomly so Player 1 pass " + discardRandomChosenPlayer1 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+      }
+
+    }
+
+    function player4Fails(){
+
+      //player 4 will get all discards card from other players and add them to their stack cards
+
+      var newArrForThePlayer4 = jungleSpeed.discardsPlayer4.concat(jungleSpeed.discardsPlayer1.concat(jungleSpeed.discardsPlayer2.concat(jungleSpeed.discardsPlayer3)));
+      var finalArrToThePlayer4 = newArrForThePlayer4.concat(jungleSpeed.stackPlayer4);
+      jungleSpeed.stackPlayer4 = finalArrToThePlayer4;
+      jungleSpeed.discardsPlayer1 = [];
+      jungleSpeed.discardsPlayer2 = [];
+      jungleSpeed.discardsPlayer3 = [];
+      jungleSpeed.discardsPlayer4 = [];
+
+      //empty the container before refreshing it
+      $("#cards-player-1").empty();
+      $("#cards-player-2").empty();
+      $("#cards-player-3").empty();
+      $("#cards-player-4").empty();
+
+      //append the new results of cards-left and discards
+      $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
+      $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
+      $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
+      $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
+
+      alert("Player 4 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer4.length + " cards left to win");
+
+    }
+
+
+    // wait till you click the play button, then launch the board page
