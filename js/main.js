@@ -133,9 +133,10 @@ function JungleSpeed() {
   this.discardsPlayer3 = [];
   this.discardsPlayer4 = [];
 
-  // Array of players
-
-
+  this.keyPressedBeforePlayer1 = false;
+  this.keyPressedBeforePlayer2 = false;
+  this.keyPressedBeforePlayer3 = false;
+  this.keyPressedBeforePlayer4 = false;
 
 
   JungleSpeed.prototype.players = function (player){
@@ -373,16 +374,18 @@ function setAllPlayers(){
       if (keyPressed === " ") {
         turn ++;//increase the turn so it changes
 
-        console.log(jungleSpeed.stackPlayer1[0]);
-        console.log(jungleSpeed.stackPlayer2[0]);
-        console.log(jungleSpeed.stackPlayer3[0]);
-        console.log(jungleSpeed.stackPlayer4[0]);
 
         switch (turn) { // switch between every turn
           case 1:
           $("#player-turn").append("IT'S " + jungleSpeed.playerArr[0].name + " TURN!");
           $("#card-player-1").empty();
           $("#cards-player-1").empty();
+          jungleSpeed.keyPressedBeforePlayer1 = false;
+          jungleSpeed.keyPressedBeforePlayer2 = false;
+          jungleSpeed.keyPressedBeforePlayer3 = false;
+          jungleSpeed.keyPressedBeforePlayer4 = false;
+
+
 
           jungleSpeed.discardsPlayer1.push(jungleSpeed.stackPlayer1[0]);
           jungleSpeed.stackPlayer1.shift();
@@ -404,6 +407,10 @@ function setAllPlayers(){
           $("#player-turn").append("IT'S " + jungleSpeed.playerArr[1].name + " TURN!");
           $("#card-player-2").empty();
           $("#cards-player-2").empty();
+          jungleSpeed.keyPressedBeforePlayer1 = false;
+          jungleSpeed.keyPressedBeforePlayer2 = false;
+          jungleSpeed.keyPressedBeforePlayer3 = false;
+          jungleSpeed.keyPressedBeforePlayer4 = false;
 
           jungleSpeed.discardsPlayer2.push(jungleSpeed.stackPlayer2[0]);
           jungleSpeed.stackPlayer2.shift();
@@ -424,6 +431,10 @@ function setAllPlayers(){
           $("#player-turn").append("IT'S " + jungleSpeed.playerArr[2].name + " TURN!");
           $("#card-player-3").empty();
           $("#cards-player-3").empty();
+          jungleSpeed.keyPressedBeforePlayer1 = false;
+          jungleSpeed.keyPressedBeforePlayer2 = false;
+          jungleSpeed.keyPressedBeforePlayer3 = false;
+          jungleSpeed.keyPressedBeforePlayer4 = false;
 
 
           jungleSpeed.discardsPlayer3.push(jungleSpeed.stackPlayer3[0]);
@@ -442,6 +453,10 @@ function setAllPlayers(){
           $("#player-turn").append("IT'S " + jungleSpeed.playerArr[3].name + " TURN!");
           $("#card-player-4").empty();
           $("#cards-player-4").empty();
+          jungleSpeed.keyPressedBeforePlayer1 = false;
+          jungleSpeed.keyPressedBeforePlayer2 = false;
+          jungleSpeed.keyPressedBeforePlayer3 = false;
+          jungleSpeed.keyPressedBeforePlayer4 = false;
 
 
           jungleSpeed.discardsPlayer4.push(jungleSpeed.stackPlayer4[0]);
@@ -454,56 +469,12 @@ function setAllPlayers(){
 
           break;
         }
-        console.log(jungleSpeed.stackPlayer1[0]);
-        console.log(jungleSpeed.stackPlayer2[0]);
-        console.log(jungleSpeed.stackPlayer3[0]);
-        console.log(jungleSpeed.stackPlayer4[0]);
-      }
-
-      if (jungleSpeed.playerArr[3].type === "cpu") {
-
-        randomLvl = Math.floor((Math.random() * 10) + 1);
-        console.log(randomLvl);
-
-          //player4 win vs player1
-          if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer1[0].visible === true) {
-
-            setTimeout(player4WinPlayer1, 2000);
-            return;
-
-          }
-          //player4 win vs player2
-          else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer2[0].visible === true) {
-
-            setTimeout(player4WinPlayer2, 2000);
-            return;
-
-          }
-          //player4 win vs player3
-          else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer3[0].visible === true) {
-
-            setTimeout(player4WinPlayer3, 2000);
-            return;
-
-          }
-          //special card appears
-          else if ((jungleSpeed.stackPlayer1[0].family === "special" || jungleSpeed.stackPlayer2[0].family === "special" || jungleSpeed.stackPlayer3[0].family === "special" || jungleSpeed.stackPlayer4[0].family === "special")) {
-            if (jungleSpeed.stackPlayer1[0].visible === true && jungleSpeed.stackPlayer2[0].visible === true && jungleSpeed.stackPlayer3[0].visible === true && jungleSpeed.stackPlayer4[0].visible === true) {
-
-              setTimeout(player4SpecialCard, 1500);
-              return;
-            }
-          }
 
 
-        if (randomLvl > 9) {
-          //player4 fails
-
-          setTimeout(player4Fails, 1000);
-          return;
-        }
 
       }
+
+
 
       //this should be only accesible if you are a human player
 
@@ -512,28 +483,149 @@ function setAllPlayers(){
         case "q": //player 1
 
         player1Options();
-
+        jungleSpeed.keyPressedBeforePlayer1 = true;
+        // console.log("`+++++++++++++INSIDE OF Q++++++++++++++++++`");
+        // console.log(jungleSpeed.keyPressedBeforePlayer1);
+        // console.log(jungleSpeed.keyPressedBeforePlayer2);
+        // console.log(jungleSpeed.keyPressedBeforePlayer3);
+        // console.log(jungleSpeed.keyPressedBeforePlayer4);
         break;
 
         case "p": //player 2
 
         player2Options();
-
+        jungleSpeed.keyPressedBeforePlayer2 = true;
+        // console.log("`++++++++++++++INSIDE OF P+++++++++++++++++`");
+        // console.log(jungleSpeed.keyPressedBeforePlayer1);
+        // console.log(jungleSpeed.keyPressedBeforePlayer2);
+        // console.log(jungleSpeed.keyPressedBeforePlayer3);
+        // console.log(jungleSpeed.keyPressedBeforePlayer4);
         break;
 
         case "z"://player 3
 
         player3Options();
-
+        jungleSpeed.keyPressedBeforePlayer3 = true;
+        // console.log("`++++++++++++++++INSIDE OF Z+++++++++++++++`");
+        // console.log(jungleSpeed.keyPressedBeforePlayer1);
+        // console.log(jungleSpeed.keyPressedBeforePlayer2);
+        // console.log(jungleSpeed.keyPressedBeforePlayer3);
+        // console.log(jungleSpeed.keyPressedBeforePlayer4);
         break;
 
         case "m": //player 4
 
         player4Options();
-
+        jungleSpeed.keyPressedBeforePlayer4 = true;
+        // console.log("`++++++++++++++++INSIDE OF M+++++++++++++++`");
+        // console.log(jungleSpeed.keyPressedBeforePlayer1);
+        // console.log(jungleSpeed.keyPressedBeforePlayer2);
+        // console.log(jungleSpeed.keyPressedBeforePlayer3);
+        // console.log(jungleSpeed.keyPressedBeforePlayer4);
         break;
       }
 
+      // COMPUTER THINGS --------------------------------
+
+      // if (jungleSpeed.playerArr[3].type === "cpu") {
+      //   console.log("COMPUTER TURN");
+      //   console.log(jungleSpeed.keyPressedBeforePlayer1);
+      //   console.log(jungleSpeed.keyPressedBeforePlayer2);
+      //   console.log(jungleSpeed.keyPressedBeforePlayer3);
+      //   console.log(jungleSpeed.keyPressedBeforePlayer4);
+      //   console.log("........................");
+      //
+      //   randomLvl = Math.floor((Math.random() * 10) + 1);
+      //   console.log(randomLvl);
+      //
+      //     //player4 win vs player1
+      //     if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer1[0].visible === true) {
+      //       if (jungleSpeed.keyPressedBeforePlayer1 === false) {
+      //         setTimeout(player4WinPlayer1, 2000);
+      //         return;
+      //       }
+      //     }
+      //     //player4 win vs player2
+      //     else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer2[0].visible === true) {
+      //       if (jungleSpeed.keyPressedBeforePlayer2 === false) {
+      //         setTimeout(player4WinPlayer2, 2000);
+      //         return;
+      //       }
+      //     }
+      //     //player4 win vs player3
+      //     else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer3[0].visible === true) {
+      //       if (jungleSpeed.keyPressedBeforePlayer3 === false) {
+      //         setTimeout(player4WinPlayer3, 2000);
+      //         return;
+      //       }
+      //     }
+      //     //special card appears
+      //     // if (jungleSpeed.keyPressedBeforePlayer1 === true || jungleSpeed.keyPressedBeforePlayer2 === true || jungleSpeed.keyPressedBeforePlayer3 === true || jungleSpeed.keyPressedBeforePlayer4 === true) {
+      //     //   console.log("`+++INSIDE OF COMPUTER CAUSE ONE IS TRUE+++++`");
+      //     //   console.log(jungleSpeed.keyPressedBeforePlayer1);
+      //     //   console.log(jungleSpeed.keyPressedBeforePlayer2);
+      //     //   console.log(jungleSpeed.keyPressedBeforePlayer3);
+      //     //   console.log(jungleSpeed.keyPressedBeforePlayer4);
+      //     //   return;
+      //     // }
+      //     if (jungleSpeed.keyPressedBeforePlayer1 === false && jungleSpeed.keyPressedBeforePlayer2 === false && jungleSpeed.keyPressedBeforePlayer3 === false && jungleSpeed.keyPressedBeforePlayer4 === false) {
+      //         console.log("++++>FIRST INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+      //         console.log(keyPressed);
+      //       if (jungleSpeed.stackPlayer1[0].family === "special" && jungleSpeed.stackPlayer1[0].visible === true) {
+      //
+      //         setTimeout(player4SpecialCard, 1500);
+      //         console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+      //         console.log(jungleSpeed.keyPressedBeforePlayer1);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer2);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer3);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer4);
+      //         return;
+      //       }
+      //       else if (jungleSpeed.stackPlayer2[0].family === "special" && jungleSpeed.stackPlayer2[0].visible === true) {
+      //         setTimeout(player4SpecialCard, 1500);
+      //         console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+      //         console.log(jungleSpeed.keyPressedBeforePlayer1);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer2);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer3);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer4);
+      //         return;
+      //       }
+      //       else if (jungleSpeed.stackPlayer3[0].family === "special" && jungleSpeed.stackPlayer3[0].visible === true) {
+      //         setTimeout(player4SpecialCard, 1500);
+      //         console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+      //         console.log(jungleSpeed.keyPressedBeforePlayer1);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer2);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer3);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer4);
+      //         return;
+      //       }
+      //       else if (jungleSpeed.stackPlayer4[0].family === "special" && jungleSpeed.stackPlayer4[0].visible === true) {
+      //         setTimeout(player4SpecialCard, 1500);
+      //         console.log("++++INSIDE OF COMPUTER CAUSE ONE IS FALSE+++++");
+      //         console.log(jungleSpeed.keyPressedBeforePlayer1);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer2);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer3);
+      //         console.log(jungleSpeed.keyPressedBeforePlayer4);
+      //         return;
+      //       }
+      //     }
+      //
+      //
+      //
+      //   if (randomLvl > 9) {
+      //     if (jungleSpeed.stackPlayer4[0].visible === false) {
+      //       return;
+      //     }
+      //     if (jungleSpeed.stackPlayer4[0].visible === true && (jungleSpeed.stackPlayer1[0].visible === false && jungleSpeed.stackPlayer2[0].visible === false && jungleSpeed.stackPlayer3[0].visible === false)) {
+      //       return;
+      //     }
+      //     //player4 fails
+      //
+      //     setTimeout(player4Fails, 1000);
+      //     return;
+      //   }
+      //
+      // }
 
     });
 
@@ -542,7 +634,7 @@ function setAllPlayers(){
     function player1Options(){
 
       //player1 win vs player2
-      if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer2[0].family) {
+      if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer1[0].visible === true && jungleSpeed.stackPlayer2[0].visible === true) {
 
         //player 1 gives all his discards to player 2 stack
         var discardPlayer1toPlayer2 = jungleSpeed.discardsPlayer1.length;//only for visual purposes
@@ -553,6 +645,8 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer1 = [];
         jungleSpeed.discardsPlayer2 = [];
         jungleSpeed.stackPlayer2[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer1 = true;
+
 
 
         //empty the container before refreshing it
@@ -577,7 +671,7 @@ function setAllPlayers(){
 
       }
       //player1 win vs player3
-      else if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer3[0].family) {
+      else if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer1[0].visible === true && jungleSpeed.stackPlayer3[0].visible === true) {
 
         //player 1 gives all his discards to player 3 stack
         var discardPlayer1toPlayer3 = jungleSpeed.discardsPlayer1.length;
@@ -587,6 +681,8 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer1 = [];
         jungleSpeed.discardsPlayer3 = [];
         jungleSpeed.stackPlayer3[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer1 = true;
+
 
         //empty the container before refreshing it
         $("#cards-player-3").empty();
@@ -605,7 +701,7 @@ function setAllPlayers(){
 
       }
       //player1 win vs player4
-      else if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer4[0].family) {
+      else if (jungleSpeed.stackPlayer1[0].family === jungleSpeed.stackPlayer4[0].family && jungleSpeed.stackPlayer1[0].visible === true && jungleSpeed.stackPlayer4[0].visible === true) {
 
         //player 1 gives all his discards to player 4 stack
         var discardPlayer1toPlayer4 = jungleSpeed.discardsPlayer1.length;
@@ -615,6 +711,8 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer1 = [];
         jungleSpeed.discardsPlayer4 = [];
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer1 = true;
+
 
         //empty the container before refreshing it
         $("#cards-player-4").empty();
@@ -653,6 +751,8 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer1 = true;
+
 
 
 
@@ -693,6 +793,8 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer1 = true;
+
 
 
 
@@ -731,6 +833,7 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer1 = true;
 
 
 
@@ -776,6 +879,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer2[0].visible = false;
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer1 = true;
 
 
 
@@ -814,7 +918,7 @@ function setAllPlayers(){
 
     function player2Options(){
       //player2 win vs player1
-      if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer1[0].family) {
+      if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer2[0].visible === true && jungleSpeed.stackPlayer1[0].visible === true) {
 
         //player 2 gives all his discards to player 1 stack
         var discardPlayer2toPlayer1 = jungleSpeed.discardsPlayer2.length;//only for visual purposes
@@ -825,6 +929,7 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer1 = [];
         jungleSpeed.discardsPlayer2 = [];
         jungleSpeed.stackPlayer1[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer2 = true;
 
 
 
@@ -847,7 +952,7 @@ function setAllPlayers(){
 
       }
       //player2 win vs player3
-      else if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer3[0].family) {
+      else if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer2[0].visible === true && jungleSpeed.stackPlayer3[0].visible === true) {
 
         //player 2 gives all his discards to player 3 stack
         var discardPlayer2toPlayer3 = jungleSpeed.discardsPlayer2.length;
@@ -857,6 +962,8 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer2 = [];
         jungleSpeed.discardsPlayer3 = [];
         jungleSpeed.stackPlayer3[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer2 = true;
+
 
         //empty the container before refreshing it
         $("#cards-player-3").empty();
@@ -873,7 +980,7 @@ function setAllPlayers(){
         alert("You had the same card of player 3 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
       }
       //player2 win vs player4
-      else if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer4[0].family) {
+      else if (jungleSpeed.stackPlayer2[0].family === jungleSpeed.stackPlayer4[0].family && jungleSpeed.stackPlayer2[0].visible === true && jungleSpeed.stackPlayer4[0].visible === true) {
 
         //player 1 gives all his discards to player 4 stack
         var discardPlayer2toPlayer4 = jungleSpeed.discardsPlayer2.length;
@@ -883,6 +990,7 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer2 = [];
         jungleSpeed.discardsPlayer4 = [];
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer2 = true;
 
         //empty the container before refreshing it
         $("#cards-player-4").empty();
@@ -919,6 +1027,7 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer2 = true;
 
 
           //empty the container before refreshing it
@@ -957,6 +1066,7 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer2 = true;
 
           //empty the container before refreshing it
           $("#cards-player-1").empty();
@@ -993,6 +1103,7 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer2 = true;
 
           //empty the container before refreshing it
           $("#cards-player-1").empty();
@@ -1035,6 +1146,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer2[0].visible = false;
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer2 = true;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1066,7 +1178,7 @@ function setAllPlayers(){
     function player3Options(){
 
       //player3 win vs player1
-      if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer1[0].family) {
+      if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer3[0].visible === true && jungleSpeed.stackPlayer1[0].visible === true) {
 
         //player 3 gives all his discards to player 1 stack
         var discardPlayer3toPlayer1 = jungleSpeed.discardsPlayer3.length;//only for visual purposes
@@ -1077,6 +1189,7 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer1 = [];
         jungleSpeed.discardsPlayer3 = [];
         jungleSpeed.stackPlayer1[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer3 = true;
 
 
 
@@ -1099,7 +1212,7 @@ function setAllPlayers(){
 
       }
       //player3 win vs player2
-      else if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer2[0].family) {
+      else if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer3[0].visible === true && jungleSpeed.stackPlayer2[0].visible === true) {
 
         //player 3 gives all his discards to player 2 stack
         var discardPlayer3toPlayer2 = jungleSpeed.discardsPlayer3.length;
@@ -1109,6 +1222,7 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer3 = [];
         jungleSpeed.discardsPlayer2 = [];
         jungleSpeed.stackPlayer2[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer3 = true;
 
         //empty the container before refreshing it
         $("#cards-player-2").empty();
@@ -1125,7 +1239,7 @@ function setAllPlayers(){
         alert("You had the same card of player 2 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
       }
       //player3 win vs player4
-      else if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer4[0].family) {
+      else if (jungleSpeed.stackPlayer3[0].family === jungleSpeed.stackPlayer4[0].family && jungleSpeed.stackPlayer3[0].visible === true && jungleSpeed.stackPlayer4[0].visible === true) {
 
         //player 3 gives all his discards to player 4 stack
         var discardPlayer3toPlayer4 = jungleSpeed.discardsPlayer3.length;
@@ -1135,6 +1249,7 @@ function setAllPlayers(){
         jungleSpeed.discardsPlayer3 = [];
         jungleSpeed.discardsPlayer4 = [];
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer3 = true;
 
         //empty the container before refreshing it
         $("#cards-player-4").empty();
@@ -1173,6 +1288,7 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer3 = true;
 
 
           //empty the container before refreshing it
@@ -1214,6 +1330,7 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer3 = true;
 
           //empty the container before refreshing it
           $("#cards-player-1").empty();
@@ -1251,6 +1368,7 @@ function setAllPlayers(){
           jungleSpeed.stackPlayer2[0].visible = false;
           jungleSpeed.stackPlayer3[0].visible = false;
           jungleSpeed.stackPlayer4[0].visible = false;
+          jungleSpeed.keyPressedBeforePlayer3 = true;
 
           //empty the container before refreshing it
           $("#cards-player-1").empty();
@@ -1295,6 +1413,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer2[0].visible = false;
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer3 = true;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1328,19 +1447,19 @@ function setAllPlayers(){
 
 
       //player4 win vs player1
-      if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family) {
+      if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer1[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer1[0].visible === true) {
 
         player4WinPlayer1();
 
       }
       //player4 win vs player2
-      else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family) {
+      else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer2[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer2[0].visible === true) {
 
         player4WinPlayer2();
 
       }
       //player4 win vs player3
-      else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family) {
+      else if (jungleSpeed.stackPlayer4[0].family === jungleSpeed.stackPlayer3[0].family && jungleSpeed.stackPlayer4[0].visible === true && jungleSpeed.stackPlayer3[0].visible === true) {
 
         player4WinPlayer3();
 
@@ -1376,6 +1495,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer1 = [];
       jungleSpeed.discardsPlayer4 = [];
       jungleSpeed.stackPlayer1[0].visible = false;
+      jungleSpeed.keyPressedBeforePlayer4 = true;
 
 
 
@@ -1409,6 +1529,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer4 = [];
       jungleSpeed.discardsPlayer2 = [];
       jungleSpeed.stackPlayer2[0].visible = false;
+      jungleSpeed.keyPressedBeforePlayer4 = true;
 
       //empty the container before refreshing it
       $("#cards-player-2").empty();
@@ -1436,6 +1557,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer4 = [];
       jungleSpeed.discardsPlayer3 = [];
       jungleSpeed.stackPlayer3[0].visible = false;
+      jungleSpeed.keyPressedBeforePlayer4 = true;
 
       //empty the container before refreshing it
       $("#cards-player-3").empty();
@@ -1550,6 +1672,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer2[0].visible = false;
       jungleSpeed.stackPlayer3[0].visible = false;
       jungleSpeed.stackPlayer4[0].visible = false;
+      jungleSpeed.keyPressedBeforePlayer4 = true;
 
       //empty the container before refreshing it
       $("#cards-player-1").empty();
@@ -1594,6 +1717,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer2[0].visible = false;
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer4 = true;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1632,6 +1756,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer2[0].visible = false;
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer4 = true;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1670,6 +1795,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer2[0].visible = false;
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
+        jungleSpeed.keyPressedBeforePlayer4 = true;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
