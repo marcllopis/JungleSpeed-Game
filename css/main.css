@@ -19,6 +19,8 @@ body{
   width: 95%;
   height: 98vh;
   margin-top: 10px;
+  background-image: url("../img/background.png");
+  background-size: cover;
 }
 
 .img-card-custom{
