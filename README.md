@@ -1,6 +1,6 @@
 <snippet>
   <content><![CDATA[
-# ${1:Jungle Spped Game}
+# Jungle Spped Game
 ## Description
 Write a project description
 
