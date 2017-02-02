@@ -1,10 +1,10 @@
 <snippet>
-  <content><![CDATA[
+  <content>
 # Jungle Spped Game
 ## Description
 Write a project description
 
 
-]]></content>
+</content>
   <tabTrigger>readme</tabTrigger>
 </snippet>
