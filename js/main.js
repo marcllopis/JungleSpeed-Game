@@ -416,7 +416,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer1.shift();
       jungleSpeed.stackPlayer1[0].visible = true;
 
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer1[0].name + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer1[0].name + '.jpg" alt="">');
 
       $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
 
@@ -442,7 +442,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer2.shift();
       jungleSpeed.stackPlayer2[0].visible = true;
 
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer2[0].name + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer2[0].name + '.jpg" alt="">');
 
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
 
@@ -467,7 +467,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer3.shift();
       jungleSpeed.stackPlayer3[0].visible = true;
 
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer3[0].name + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer3[0].name + '.jpg" alt="">');
 
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
 
@@ -494,7 +494,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer4.shift();
       jungleSpeed.stackPlayer4[0].visible = true;
 
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer4[0].name + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.stackPlayer4[0].name + '.jpg" alt="">');
 
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
 
@@ -510,7 +510,25 @@ function setAllPlayers(){
       console.log(keyPressed);
       $("#player-turn").empty(); // empty all the container
 
+      if (keyPressed === "w") {
+        $("#totem").addClass("animated fadeOutUp");
+      }
+      if (keyPressed === "s") {
+        $("#totem").addClass("animated fadeOutDown");
+      }
+      if (keyPressed === "a") {
+        $("#totem").addClass("animated fadeOutLeft");
+      }
+      if (keyPressed === "d") {
+        $("#totem").addClass("animated fadeOutRight");
+      }
+
       if (keyPressed === " ") {
+        $("#totem").removeClass("animated fadeOutUp");
+        $("#totem").removeClass("animated fadeOutDown");
+        $("#totem").removeClass("animated fadeOutLeft");
+        $("#totem").removeClass("animated fadeOutRight");
+
         turn ++;//increase the turn so it changes
         timer();
 
@@ -556,16 +574,28 @@ function setAllPlayers(){
         break;
 
         case "p": //player 2
+        if (jungleSpeed.playerArr[1].type === "cpu") {
+          alert("You are not the computer! Don't cheat!!");
+          return;
+        }
         player2Options();
         jungleSpeed.keyPressedBeforePlayer2 = true;
         break;
 
         case "z"://player 3
+        if (jungleSpeed.playerArr[2].type === "cpu") {
+          alert("You are not the computer! Don't cheat!!");
+          return;
+        }
         player3Options();
         jungleSpeed.keyPressedBeforePlayer3 = true;
         break;
 
         case "m": //player 4
+        if (jungleSpeed.playerArr[3].type === "cpu") {
+          alert("You are not the computer! Don't cheat!!");
+          return;
+        }
         player4Options();
         jungleSpeed.keyPressedBeforePlayer4 = true;
         break;
@@ -991,7 +1021,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer2 = [];
       jungleSpeed.stackPlayer2[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer1 = true;
-
+      turn = 1;
 
 
       //empty the container before refreshing it
@@ -1004,13 +1034,18 @@ function setAllPlayers(){
       $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
 
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
 
 
       alert("You had the same card of player 2 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+
+
+
+      $("#totem").addClass("animated fadeOutRight");
+
 
       return true;
 
@@ -1025,6 +1060,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer3 = [];
       jungleSpeed.stackPlayer3[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer1 = true;
+      turn = 2;
 
 
       //empty the container before refreshing it
@@ -1035,10 +1071,13 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
       alert("You had the same card of player 3 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutDown");
+
 
       return true;
 
@@ -1054,6 +1093,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer4 = [];
       jungleSpeed.stackPlayer4[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer1 = true;
+      turn = 3;
 
 
       //empty the container before refreshing it
@@ -1064,11 +1104,14 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 4 and you clicked first!\n Player 1 pass " + discardPlayer1toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutLeft");
+
 
       return true;
 
@@ -1092,6 +1135,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer1 = true;
+        turn = 1;
 
 
 
@@ -1111,12 +1155,15 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 1 clicked first\n Player 2 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrRandomPlayer2.length +" cards. So now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutRight");
+
 
       }
 
@@ -1134,6 +1181,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer1 = true;
+        turn = 2;
 
 
 
@@ -1153,12 +1201,15 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 1 clicked first\n Player 3 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrRandomPlayer3.length +" cards. So now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutDown");
+
       }
       if (randomPlayer === 3) {
         //player 1 gives all his discards to player 4 stack
@@ -1174,6 +1225,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer1 = true;
+        turn = 3;
 
 
 
@@ -1192,12 +1244,15 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 1 clicked first\n Player 4 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrRandomPlayer4.length +" cards. So now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutLeft");
+
       }
 
       return true;
@@ -1219,6 +1274,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer3[0].visible = false;
       jungleSpeed.stackPlayer4[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer1 = true;
+      turn = 0;
 
 
 
@@ -1237,12 +1293,14 @@ function setAllPlayers(){
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
       alert("Player 1 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer1.length + " cards left to win");
+
+      $("#totem").addClass("animated fadeOutUp");
 
       return false;
 
@@ -1268,6 +1326,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer2 = [];
       jungleSpeed.stackPlayer1[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer2 = true;
+      turn = 0;
 
 
 
@@ -1280,11 +1339,13 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
       $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 1 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutUp");
 
 
     }
@@ -1299,6 +1360,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer3 = [];
       jungleSpeed.stackPlayer3[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer2 = true;
+      turn = 2;
 
 
       //empty the container before refreshing it
@@ -1309,11 +1371,14 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 3 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutDown");
+
 
     }
     function player2WinPlayer4() {
@@ -1327,6 +1392,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer4 = [];
       jungleSpeed.stackPlayer4[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer2 = true;
+      turn = 3;
 
       //empty the container before refreshing it
       $("#cards-player-4").empty();
@@ -1336,11 +1402,14 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 4 and you clicked first!\n Player 2 pass " + discardPlayer2toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutLeft");
+
 
     }
     function player2SpecialCard() {
@@ -1361,6 +1430,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer2 = true;
+        turn = 0;
 
 
         //empty the container before refreshing it
@@ -1378,12 +1448,16 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 2 clicked first\n Player 1 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrDiscardForPlayer1.length +" cards. So now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutUp");
+
+
       }
 
       if (randomPlayer === 2) {
@@ -1400,6 +1474,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer2 = true;
+        turn = 2;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1416,12 +1491,15 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<animated flipInY  class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 2 clicked first\n Player 3 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrDiscardForPlayer3.length +" cards. So now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutDown");
+
       }
       if (randomPlayer === 3) {
         //player 2 gives all his discards to player 4 stack
@@ -1437,6 +1515,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer2 = true;
+        turn = 3;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1453,12 +1532,15 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 2 clicked first\n Player 4 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrDiscardForPlayer4.length +" cards. So now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutLeft");
+
       }
 
 
@@ -1478,6 +1560,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer3[0].visible = false;
       jungleSpeed.stackPlayer4[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer2 = true;
+      turn = 1;
 
       //empty the container before refreshing it
       $("#cards-player-1").empty();
@@ -1494,12 +1577,15 @@ function setAllPlayers(){
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
       alert("Player 2 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer2.length + " cards left to win");
+
+      $("#totem").addClass("animated fadeOutRight");
+
     }
 
 
@@ -1520,6 +1606,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer3 = [];
       jungleSpeed.stackPlayer1[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer3 = true;
+      turn = 0;
 
 
 
@@ -1532,11 +1619,13 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
       $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 1 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutUp");
 
 
     }
@@ -1551,6 +1640,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer2 = [];
       jungleSpeed.stackPlayer2[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer3 = true;
+      turn = 1;
 
       //empty the container before refreshing it
       $("#cards-player-2").empty();
@@ -1560,11 +1650,14 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 2 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutRight");
+
     }
     function player3WinPlayer4() {
 
@@ -1577,6 +1670,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer4 = [];
       jungleSpeed.stackPlayer4[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer3 = true;
+      turn = 3;
 
       //empty the container before refreshing it
       $("#cards-player-4").empty();
@@ -1586,11 +1680,14 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 4 and you clicked first!\n Player 3 pass " + discardPlayer3toPlayer4 + " cards to player 4, so now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutLeft");
+
 
     }
     function player3SpecialCard() {
@@ -1611,6 +1708,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer3 = true;
+        turn = 0;
 
 
         //empty the container before refreshing it
@@ -1628,13 +1726,16 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
         alert("The SPECIAL card appeared and player 3 clicked first\n Player 1 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrDiscardToPlayer1.length +" cards. So now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutUp");
+
 
       }
 
@@ -1653,6 +1754,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer3 = true;
+        turn = 1;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1669,13 +1771,16 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
         alert("The SPECIAL card appeared and player 3 clicked first\n Player 2 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrDiscardToPlayer2.length +" cards. So now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutRight");
+
       }
       if (randomPlayer === 3) {
         //player 3 gives all his discards to player 4 stack
@@ -1691,6 +1796,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer3 = true;
+        turn = 3;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1707,13 +1813,16 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
         alert("The SPECIAL card appeared and player 3 clicked first\n Player 4 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrDiscardToPlayer4.length +" cards. So now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutLeft");
+
       }
 
 
@@ -1733,6 +1842,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer3[0].visible = false;
       jungleSpeed.stackPlayer4[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer3 = true;
+      turn = 2;
 
       //empty the container before refreshing it
       $("#cards-player-1").empty();
@@ -1749,12 +1859,15 @@ function setAllPlayers(){
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
       alert("Player 3 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer3.length + " cards left to win");
+
+      $("#totem").addClass("animated fadeOutDown");
+
     }
 
 
@@ -1774,6 +1887,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer4 = [];
       jungleSpeed.stackPlayer1[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer4 = true;
+      turn = 0;
 
 
 
@@ -1786,12 +1900,13 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
       $("#cards-player-1").append("Cards Left to win: " + jungleSpeed.stackPlayer1.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer1.length);
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<animated flipInY  class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 1 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer1 + " cards to player 1, so now player 1 needs " + jungleSpeed.stackPlayer1.length + " cards to finish the game");
 
+      $("#totem").addClass("animated fadeOutUp");
 
 
 
@@ -1808,6 +1923,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer2 = [];
       jungleSpeed.stackPlayer2[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer4 = true;
+      turn = 1;
 
       //empty the container before refreshing it
       $("#cards-player-2").empty();
@@ -1817,11 +1933,14 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 2 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer2 + " cards to player 2, so now player 2 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutRight");
+
 
     }
 
@@ -1836,6 +1955,7 @@ function setAllPlayers(){
       jungleSpeed.discardsPlayer3 = [];
       jungleSpeed.stackPlayer3[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer4 = true;
+      turn = 2;
 
       //empty the container before refreshing it
       $("#cards-player-3").empty();
@@ -1845,11 +1965,14 @@ function setAllPlayers(){
       //append the new results of cards-left and discards
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
 
       alert("You had the same card of player 3 and you clicked first!\n Player 4 pass " + discardPlayer4toPlayer3 + " cards to player 3, so now player 3 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+
+      $("#totem").addClass("animated fadeOutDown");
+
 
     }
 
@@ -1869,6 +1992,7 @@ function setAllPlayers(){
       jungleSpeed.stackPlayer3[0].visible = false;
       jungleSpeed.stackPlayer4[0].visible = false;
       jungleSpeed.keyPressedBeforePlayer4 = true;
+      turn = 3;
 
       //empty the container before refreshing it
       $("#cards-player-1").empty();
@@ -1885,12 +2009,15 @@ function setAllPlayers(){
       $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
       $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
       $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-      $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-      $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+      $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
       alert("Player 4 thought he had something equal but he didn't, he gets all the discard cards from the other players, he now have " + jungleSpeed.stackPlayer4.length + " cards left to win");
+
+      $("#totem").addClass("animated fadeOutLeft");
+
 
     }
 
@@ -1914,6 +2041,8 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer4 = true;
+        turn = 0;
+
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1930,12 +2059,16 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<animated flipInY  class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 4 clicked first\n Player 1 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrForThePlayer1.length +" cards. So now player 4 needs " + jungleSpeed.stackPlayer4.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutUp");
+
+
       }
       if (randomPlayer === 2) {
 
@@ -1953,6 +2086,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer4 = true;
+        turn = 1;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -1969,12 +2103,15 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 4 clicked first\n Player 2 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrForThePlayer2.length +" cards. So now player 4 needs " + jungleSpeed.stackPlayer2.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutRight");
+
       }
       if (randomPlayer === 3) {
 
@@ -1992,6 +2129,7 @@ function setAllPlayers(){
         jungleSpeed.stackPlayer3[0].visible = false;
         jungleSpeed.stackPlayer4[0].visible = false;
         jungleSpeed.keyPressedBeforePlayer4 = true;
+        turn = 2;
 
         //empty the container before refreshing it
         $("#cards-player-1").empty();
@@ -2008,12 +2146,15 @@ function setAllPlayers(){
         $("#cards-player-2").append("Cards Left to win: " + jungleSpeed.stackPlayer2.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer2.length);
         $("#cards-player-3").append("Cards Left to win: " + jungleSpeed.stackPlayer3.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer3.length);
         $("#cards-player-4").append("Cards Left to win: " + jungleSpeed.stackPlayer4.length + "<br>Discard Stack: " + jungleSpeed.discardsPlayer4.length);
-        $("#card-player-1").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-2").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-3").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
-        $("#card-player-4").append('<img class="img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-1").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-2").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-3").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
+        $("#card-player-4").append('<img class="animated flipInY img-responsive img-card-custom" src="img/' + jungleSpeed.coverCard + '.jpg" alt="">');
 
         alert("The SPECIAL card appeared and player 4 clicked first\n Player 3 has been choosen randomly so he gets all the discard cards from the other 3 players, it means " + newArrForThePlayer3.length +" cards. So now player 4 needs " + jungleSpeed.stackPlayer3.length + " cards to finish the game");
+
+        $("#totem").addClass("animated fadeOutDown");
+
       }
 
     }

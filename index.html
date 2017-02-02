@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Jungle Speed Game</title>
+    <!-- ANIMATE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -46,7 +48,7 @@
 
   <!-- END OF NAVBAR -->
 
-  <div class="container">
+  <div class="container custom-board-container">
 
     <div class="row">
       <div class="col-md-12">
@@ -154,7 +156,7 @@
     </div>
 
     <div class="col-md-4 turn-custom">
-      <!-- <h4 class="text-center">PRESS "SPACE" TO START AND CHANGE TURN</h4> -->
+        <img id="totem" class="totem-custom img-responsive" src="img/totem.png" alt=""><br>
       <h1 id="player-turn" class ="text-center turns-mode">Press "SPACE" to start!</h1>
 
     </div>
@@ -175,7 +177,7 @@
   </div>
 
 <!-- PLAYER3 -->
-<div class="row">
+<div class="row custom-margin">
   <div class="col-md-3">
     <!-- margin -->
   </div>
@@ -202,6 +204,7 @@
   </div>
 </div>
 
+<div id="modal-container"></div>
 
 
   </div>
