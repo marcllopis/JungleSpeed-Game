@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Jungle Speed Game</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <!-- ANIMATE -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
@@ -20,7 +22,7 @@
   <section id="first-screen">
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -39,7 +41,7 @@
             <li><a href="#">Cards</a></li>
             <li><a href="#">Rules</a></li>
             <li><a href="#">Buy the game</a></li>
-            <li><a href="#">Wathever</a></li>
+            <li><a href="#">About</a></li>
           </ul>
 
         </div>
@@ -56,52 +58,82 @@
           <img class="img-responsive" src="img/logo.jpg" alt="">
         </div>
         <div class="text-container">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In possimus illum, accusamus. Laudantium ex quia odio est temporibus architecto eveniet, rem vero alias nemo nihil vel obcaecati suscipit, eius ut.</p>
+          <div class="row">
+            <div class="col-md-4">
+              <h3 class="text-center">Be faster than your opponents!</h3>
+              <br>
+              <p>Check the cards on the board and look for equal shapes. Press your key faster than your opponents or you will get all their cards. But watch out, some cards look alike but they don't have the exact same shape...</p>
+            </div>
+
+            <div class="col-md-4">
+              <h3 class="text-center">Be the first to end your card stack</h3>
+              <br>
+              <p>If you finish all your cards stack before the other players you will win the game!</p>
+            </div>
+
+            <div class="col-md-4">
+              <h3 class="text-center">Try to beat your friends and the computer!</h3><br>
+              <p>You can play with 3 more friends or try to beat 3 different levels of computer. You really think that you are better than a god level computer?</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
-        <h2>Set the game</h2>
-        <h3>Number of players</h3>
-        <select id="number-of-players" class="form-control">
-          <option></option>
-          <option value="4">4 players</option>
-          <option value="3">3 players vs 1 cpu</option>
-          <option value="2">2 players vs 2 cpu</option>
-          <option value="1">1 player vs 3 cpu</option>
-        </select>
+      <div class="col-md-12 ready">
+        <h2 class="text-center marg-bot">Are you ready to play?</h2>
+        <div class="row align-options">
+          <div class="col-md-6 ">
+            <h3>Number of players</h3>
+            <select id="number-of-players" class="form-control players-form">
+              <option></option>
+              <option value="4">4 players</option>
+              <option value="3">3 players vs 1 cpu</option>
+              <option value="2">2 players vs 2 cpu</option>
+              <option value="1">1 player vs 3 cpu</option>
+            </select>
 
-        <div id="cpu" class="hide-container">
-          <h3>Level of computer</h3>
-          <select id="lvl-of-cpu" class="form-control">
-            <option></option>
-            <option value="0">Dumb</option>
-            <option value="1">Decent</option>
-            <option value="2">God</option>
-          </select>
+            <div id="cpu" class="hide-container players-form">
+              <h3>Level of computer</h3>
+              <select id="lvl-of-cpu" class="form-control">
+                <option></option>
+                <option value="0">Dumb</option>
+                <option value="1">Decent</option>
+                <option value="2">God</option>
+              </select>
+            </div>
+
+
+            <button id="all-set" class="btn btn-warning btn-lg btn-set">All SET</button>
+          </div>
+
+          <div class="col-md-6">
+
+
+                <div class="players-form2" id="names-to-play">
+
+                </div>
+
+                <div id="final-cpu-lvl">
+
+                </div>
+                <div id="play-button">
+                  <button id="play" class="btn btn-warning btn-lg btn-play hide-container">PLAY</button>
+                </div>
+
+          </div>
+
         </div>
 
-        <button id="all-set" class="btn btn-success btn-lg">All SET</button>
-      </div>
 
-      <div id="recap" class="col-md-6">
 
-          <div id="names-to-play">
-
-          </div>
-
-          <div id="final-cpu-lvl">
-
-          </div>
-          <div id="play-button">
-            <button id="play" class="btn btn-success btn-lg hide-container">PLAY</button>
-          </div>
       </div>
     </div>
 
 
   </div>
+  <div class="spacer"></div>
+
 </section>
 
 
