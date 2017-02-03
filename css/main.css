@@ -3,6 +3,11 @@ body{
 
 }
 
+html, body, #wrapper {
+    width: 100%;
+    min-height: 100%;
+}
+
 .hide-container{
   display:none;
 }
