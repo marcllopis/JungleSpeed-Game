@@ -464,7 +464,7 @@ function setAllPlayers(){
       console.log("Im in te voice recorder");
       // Let's define our first command. First the text we expect, and then the function it should call
       var commands = {
-        'next, start': function() {
+        'start': function() {
           keyPressedSpace();
         }
       };
