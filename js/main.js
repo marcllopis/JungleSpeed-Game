@@ -463,6 +463,7 @@ function setAllPlayers(){
 
     if (annyang) {
       // Let's define a command.
+      console.log("voice here");
       var commands = {
         'next': function() {
           $("#totem").removeClass("animated fadeOutUp");
