@@ -464,7 +464,41 @@ function setAllPlayers(){
     if (annyang) {
       // Let's define a command.
       var commands = {
-        'next': function() { keyPressedSpace(); }
+        'next': function() {
+          $("#totem").removeClass("animated fadeOutUp");
+          $("#totem").removeClass("animated fadeOutDown");
+          $("#totem").removeClass("animated fadeOutLeft");
+          $("#totem").removeClass("animated fadeOutRight");
+
+          turn ++;//increase the turn so it changes
+          timer();
+
+          switch (turn) { // switch between every turn
+            case 1: //player 1 turn
+
+            setTimeout(turn1, 1500);
+
+            break;
+
+            case 2://player 2 turn
+
+            setTimeout(turn2, 1500);
+
+            break;
+
+            case 3://player 3 turn
+
+            setTimeout(turn3, 1500);
+
+            break;
+
+            case 4: //player 4 turn
+
+            setTimeout(turn4, 1500);
+
+            break;
+          }
+         }
       };
       annyang.debug(true);
       // Add our commands to annyang
