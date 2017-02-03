@@ -464,7 +464,7 @@ function setAllPlayers(){
     if (annyang) {
       // Let's define a command.
       var commands = {
-        'start': function() { alert("Welcome"); }
+        'next': function() { keyPressedSpace(); }
       };
       annyang.debug(true);
       // Add our commands to annyang
