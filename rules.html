@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Jungle Speed Game</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <!-- ANIMATE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- My CSS    -->
+    <link rel="stylesheet" href="css/main.css">
+
+  </head>
+  <body>
+  <section id="first-screen">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Jungle Speed</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html">Play the game</a></li>
+            <li><a href="cards.html">Cards</a></li>
+            <li class="active"><a href="rules.html">Rules<span class="sr-only">(current)</span></a></li>
+            <li><a href="https://www.amazon.com/Asmodee-JS01USASM-Jungle-Speed/dp/2914849370">Buy the game</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+
+        </div>
+      </div>
+  </nav>
+
+  <!-- END OF NAVBAR -->
+
+  <div class="container custom-board-container">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="text-container rules-custom">
+          <h1>Game Rules<br></h1><br>
+          <h3>Set the game</h3>
+          <hr>
+          <p>First set how many players and computers will play.<br>
+          Each player will have a key so everytime you feel you have some equal card, you should press the key to virtually grab the totem. You have to do it before the other players do it!<br>
+          If you decide to play against some computer you can choose how smart they will be:</p><br>
+          <ul>
+            <li><b>Dumb level</b>: This computer will fail from time to time and it's quite slow... piece of cake!</li>
+            <li><b>Decent level</b>: A decent computer will eventually fail but it's faster than a Dumb computer so watch out...</li>
+            <li><b>God level</b>: This is the hard mode! This computer will never fail and it's super fast, are you sure you want to go against it?</li>
+          </ul><br>
+          <p>Once all the options are set, you will see your assigned key and you will be ready to play.</p>
+          <br><br>
+          <h3>Play the game</h3>
+          <hr>
+          <p>When you are on the game board each player will be on top, right, left or bottom. The name will be displayed and also you can see how many cards they need to end the game (the game ends when you are 0 cards left).<br>
+          Everytime a player click his key, the game will check if there was a card match. If so, the player who clicked first, will pass all his discard cards to the loser one. The loser will add all those cards to his stack so he will need more turns to finish the game.<br>
+          If a player click his key and there was no match, he will get all the discard cards from the other players and will put all those cards on his card stack.<br>
+
+          If a special card appear, everyone should click his key. The one who click first will be safe and one random player will be selected. This unlucky player will get all the discard cards from other players.<br><br>
+        </p>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="spacer"></div>
+
+</section>
+
+
+
+
+
+    <!-- Text to Speech -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- My JS -->
+    <script src="js/game.js"></script>
+      <!-- My JS -->
+    <script src="js/main.js"></script>
+  </body>
+
+</html>
