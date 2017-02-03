@@ -441,7 +441,7 @@ function setAllPlayers(){
             turn = 4;
           }
 
-          $("#player-turn").html('IT IS ' + jungleSpeed.playerArr[turn - 1].name + ' TURN!<h4 class="text-center">PRESS "SPACE" TO CHANGE TURN</h4>');
+          $("#player-turn").html('IT IS ' + jungleSpeed.playerArr[turn - 1].name + ' TURN!<h4 class="text-center">PRESS "SPACE" OR SAY "NEXT" TO CHANGE TURN</h4>');
 
           if (turn === 4) {
             turn = 0;
