@@ -459,23 +459,38 @@ function setAllPlayers(){
     //----------------------- VOICE RECOGNITION ----------------------------
     //----------------------------------------------------------------------
 
-    // Speech to text
-    if (annyang) {
-      console.log("Im in te voice recorder");
-      // Let's define our first command. First the text we expect, and then the function it should call
-      var commands = {
-        'start': function() {
-          keyPressedSpace();
-        }
-      };
-      console.log(commands);
 
+
+    if (annyang) {
+      // Let's define a command.
+      var commands = {
+        'start': function() { alert("Welcome"); }
+      };
+      annyang.debug(true);
       // Add our commands to annyang
       annyang.addCommands(commands);
 
-      // Start listening. You can call this here, or attach this call to an event, button, etc.
+
+      // Start listening.
       annyang.start();
     }
+
+    // if (annyang) {
+    //   console.log("Im in te voice recorder");
+    //   // Let's define our first command. First the text we expect, and then the function it should call
+    //   var commands = {
+    //     'start': function() {
+    //       keyPressedSpace();
+    //     }
+    //   };
+    //   console.log(commands);
+    //
+    //   // Add our commands to annyang
+    //   annyang.addCommands(commands);
+    //
+    //   // Start listening. You can call this here, or attach this call to an event, button, etc.
+    //   annyang.start();
+    // }
 
     //----------------------------------------------------------------------
     //-------------------- PLAYER BEHAVIOUR FUNCTIONS-----------------------
